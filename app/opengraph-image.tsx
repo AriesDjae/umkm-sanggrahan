@@ -61,7 +61,7 @@ export default function Gambar() {
                 marginLeft: 22,
               }}
             >
-              {`REGISTRI UMKM · ${site.kelurahan.toUpperCase()} · ${site.kemantren.toUpperCase()}`}
+              {`USAHA WARGA · ${site.kelurahan.toUpperCase()} · ${site.kemantren.toUpperCase()}`}
             </div>
           </div>
 

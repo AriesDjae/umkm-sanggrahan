@@ -1,5 +1,6 @@
 /** Fungsi bantu tampilan — aman dipakai di komponen client maupun server. */
 import type { Produk, Umkm } from "./types";
+import { site } from "./site";
 
 export function formatRupiah(harga: number | null | undefined): string {
   if (harga === null || harga === undefined) return "Hubungi penjual";
@@ -28,11 +29,11 @@ export function tautanWa(nomor: string, pesan: string): string {
 }
 
 export function pesanTanyaUmkm(u: Umkm): string {
-  return `Halo ${u.pemilik}, saya menemukan ${u.nama} di web UMKM Sanggrahan. Saya ingin bertanya soal produknya.`;
+  return `Halo ${u.pemilik}, saya menemukan ${u.nama} di web ${site.nama}. Saya ingin bertanya soal produknya.`;
 }
 
 export function pesanPesanProduk(u: Umkm, produk: Produk): string {
-  return `Halo ${u.pemilik}, saya menemukan ${u.nama} di web UMKM Sanggrahan. Saya ingin memesan "${produk.nama}". Apakah masih tersedia?`;
+  return `Halo ${u.pemilik}, saya menemukan ${u.nama} di web ${site.nama}. Saya ingin memesan "${produk.nama}". Apakah masih tersedia?`;
 }
 
 export function fotoUtama(u: Umkm): string | undefined {

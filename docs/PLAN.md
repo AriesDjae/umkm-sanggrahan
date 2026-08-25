@@ -113,7 +113,7 @@ Web yang tidak disebar = tidak ada gunanya. Tiga lapis:
 **Lapis 2 — Didaftarkan ke platform (setelah web online)**
 - Google Search Console → daftarkan sitemap
 - Google Bisnisku untuk tiap UMKM → ini yang membuat muncul di Google Maps
-- Akun Instagram & Facebook Page bersama "UMKM Sanggrahan"
+- Akun Instagram & Facebook Page bersama "Usaha Warga Sanggrahan"
 - Daftarkan ke direktori UMKM daerah / dinas terkait
 
 **Lapis 3 — Penyebaran manual (dikerjakan pengurus, berkelanjutan)**

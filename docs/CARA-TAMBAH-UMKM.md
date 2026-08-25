@@ -1,6 +1,6 @@
 # Cara Menambah UMKM Baru
 
-Panduan ini untuk Anda yang mengelola web UMKM Sanggrahan. Tidak perlu bisa
+Panduan ini untuk Anda yang mengelola web Usaha Warga Sanggrahan. Tidak perlu bisa
 memprogram — cukup ikuti langkah di bawah.
 
 ---

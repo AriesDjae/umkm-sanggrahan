@@ -138,3 +138,16 @@ Temuan dari putaran perombakan kedua (Registri Bidang):
     bukan oleh mata.
 16. **Dua ukuran huruf dan satu bayangan di luar sistem** pada kendali peta.
     Disesuaikan ke tangga huruf dan bayangan yang terdokumentasi.
+
+Temuan dari penambahan profil singkat dan peta di beranda:
+
+17. **Gelembung keterangan langsung tertutup lagi begitu patoknya ditekan.**
+    Klik patok menandainya sebagai terpilih, penandaan itu menyusun ulang
+    seluruh patok, dan gelembung yang baru dibuka ikut terbuang bersama patok
+    lamanya. Pada peta ringkas penandaan terpilih itu dilepas — tidak ada
+    daftar samping yang membutuhkannya.
+18. **Sudut gelembung tetap bulat 12px** meski sudah disetel 2px: berkas gaya
+    bawaan Leaflet dimuat sesudah `globals.css`, jadi aturan dengan
+    spesifisitas sama tetap kalah. Pemilihnya diawali `.leaflet-container`.
+19. **Label "Kota" berisi "Kota Yogyakarta"** di blok profil, sehingga katanya
+    terbaca dua kali. Awalan itu dipangkas saat ditampilkan.

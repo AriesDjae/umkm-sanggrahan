@@ -3,7 +3,7 @@
  * Ubah nilai di sini kalau ada perubahan nama, kontak, atau alamat web.
  */
 export const site = {
-  nama: "UMKM Sanggrahan",
+  nama: "Usaha Warga Sanggrahan",
 
   kampung: "Kampung Sanggrahan",
   kelurahan: "Semaki",
@@ -28,7 +28,7 @@ export const site = {
 
   // Kontak pengurus, dipakai di halaman /daftar dan footer.
   kontakPengurus: {
-    nama: "Pengurus UMKM Sanggrahan",
+    nama: "Pengurus Usaha Warga Sanggrahan",
     whatsapp: "6281234567890", // TODO: ganti dengan nomor asli pengurus
   },
 

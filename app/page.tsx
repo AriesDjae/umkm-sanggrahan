@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BarisBidang from "@/components/BarisBidang";
+import PetaLazy from "@/components/PetaLazy";
 import KodeBidang from "@/components/KodeBidang";
 import { IkonPanah, IkonPin } from "@/components/Ikon";
 import { KATEGORI } from "@/lib/kategori";
@@ -78,6 +79,88 @@ export default function Beranda() {
         </div>
       </section>
 
+      {/* ---- Profil singkat & letak bidang ---- */}
+      <section className="mx-auto max-w-[80rem] px-4 pb-14">
+        <div className="grid items-start gap-6 lg:grid-cols-[23rem_1fr]">
+          {/* Blok identitas wilayah, dibaca seperti kepala berkas resmi. */}
+          <div className="lembar">
+            <div className="kop px-3 py-3 sm:px-4">
+              <h2 className="label-registri">Profil singkat</h2>
+            </div>
+
+            <div className="px-3 py-4 sm:px-4">
+              <p className="text-sm leading-relaxed text-tinta-lembut">
+                {site.kampung} berada di Kelurahan {site.kelurahan}, Kemantren{" "}
+                {site.kemantren}, {site.kota}. Registri ini mencatat usaha milik
+                warganya di RW 1 dan RW 3 — warung, jasa, kerajinan, dan hasil
+                kebun yang selama ini hanya dikenal di lingkungan sendiri.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-tinta-lembut">
+                Dikelola swadaya oleh pengurus RW. Tiap bidang diperiksa lebih
+                dulu sebelum dicatat, dan pendataan masih berjalan dari RT ke
+                RT.
+              </p>
+
+              <dl className="mt-5 border-t-[1.5px] border-garis">
+                {[
+                  { label: "Kampung", nilai: "Sanggrahan" },
+                  { label: "Kelurahan", nilai: site.kelurahan },
+                  { label: "Kemantren", nilai: site.kemantren },
+                  { label: "Kota", nilai: site.kota.replace(/^Kota /, "") },
+                  { label: "Cakupan", nilai: "RW 1 dan RW 3" },
+                  { label: "Pengelola", nilai: "Pengurus RW, swadaya" },
+                  { label: "Biaya", nilai: "Tidak ada" },
+                ].map((b) => (
+                  <div
+                    key={b.label}
+                    className="flex items-baseline justify-between gap-4 border-b-[1.5px] border-garis py-2"
+                  >
+                    <dt className="label-registri">{b.label}</dt>
+                    <dd className="text-sm font-semibold text-tinta">
+                      {b.nilai}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              <Link
+                href="/tentang"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-resmi underline underline-offset-4"
+              >
+                Tentang registri ini
+                <IkonPanah className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Peta ringkas: peta yang sama dengan halaman /peta, tanpa daftar samping. */}
+          <div>
+            <div className="flex flex-wrap items-end justify-between gap-x-5 gap-y-2">
+              <div>
+                <h2 className="judul-registri text-2xl text-tinta">
+                  Letak bidang
+                </h2>
+                <p className="mt-2 text-sm text-tinta-lembut">
+                  {berkoordinat} bidang sudah bertitik lokasi. Tekan patoknya
+                  untuk melihat keterangan singkat.
+                </p>
+              </div>
+              <Link
+                href="/peta"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-resmi underline underline-offset-4"
+              >
+                Buka peta lengkap
+                <IkonPanah className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+
+            <div className="mt-4">
+              <PetaLazy daftar={semua} ringkas />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---- Cuplikan lembar registri ---- */}
       <section className="mx-auto max-w-[80rem] px-4 pb-16">
         <div className="lembar">
@@ -96,8 +179,8 @@ export default function Beranda() {
             </ul>
           ) : (
             <p className="px-4 py-14 text-center text-sm text-tinta-lembut">
-              Belum ada bidang yang tercatat. Pendataan sedang berjalan dari RT ke
-              RT.
+              Belum ada bidang yang tercatat. Pendataan sedang berjalan dari RT
+              ke RT.
             </p>
           )}
         </div>
@@ -121,7 +204,9 @@ export default function Beranda() {
         style={{ backgroundColor: "var(--color-putih)" }}
       >
         <div className="mx-auto max-w-[80rem] px-4">
-          <h2 className="judul-registri text-2xl text-tinta">Indeks kategori</h2>
+          <h2 className="judul-registri text-2xl text-tinta">
+            Indeks kategori
+          </h2>
           <p className="mt-2 text-sm text-tinta-lembut">
             Kategori dibedakan oleh kode huruf dan arsirannya, bukan oleh warna.
           </p>
@@ -157,67 +242,45 @@ export default function Beranda() {
 
       {/* ---- Pendaftaran bidang baru ---- */}
       <section className="mx-auto max-w-[80rem] px-4 py-16">
-        <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-          <div className="lembar p-6 sm:p-9">
-            <span className="stempel inline-block px-3 py-1.5 text-xs font-bold">
-              GRATIS
-            </span>
-            <h2 className="judul-registri mt-5 text-[clamp(1.6rem,1.2rem+1.8vw,2.4rem)] text-tinta">
-              Punya usaha di RW 1 atau RW 3?
-            </h2>
-            <p
-              className="mt-4 text-base leading-relaxed text-tinta-lembut"
-              style={{ maxWidth: "56ch" }}
-            >
-              Bidang usaha Anda dicatat di sini tanpa biaya. Tidak ada iuran,
-              tidak ada potongan penjualan, dan tidak ada perantara. Cukup kirim
-              data dan foto ke pengurus.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <a
-                href={tautanWa(
-                  site.kontakPengurus.whatsapp,
-                  `Halo, saya warga ${site.kampung} dan ingin mendaftarkan usaha saya ke registri ${site.nama}.`,
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-[2px] border-[1.5px] px-5 py-3 text-base font-semibold"
-                style={{
-                  backgroundColor: "var(--color-resmi)",
-                  borderColor: "var(--color-resmi-tua)",
-                  color: "var(--color-putih)",
-                }}
-              >
-                Hubungi pengurus
-              </a>
-              <Link
-                href="/daftar"
-                className="rounded-[2px] border-[1.5px] border-garis-tegas px-5 py-3 text-base font-semibold text-tinta"
-              >
-                Baca syaratnya
-              </Link>
-            </div>
-          </div>
-
-          <Link
-            href="/peta"
-            className="lembar group flex flex-col p-6 transition-colors hover:bg-[var(--color-resmi-muda)] sm:p-8"
+        <div className="lembar p-6 sm:p-9">
+          <span className="stempel inline-block px-3 py-1.5 text-xs font-bold">
+            GRATIS
+          </span>
+          <h2 className="judul-registri mt-5 text-[clamp(1.6rem,1.2rem+1.8vw,2.4rem)] text-tinta">
+            Punya usaha di RW 1 atau RW 3?
+          </h2>
+          <p
+            className="mt-4 text-base leading-relaxed text-tinta-lembut"
+            style={{ maxWidth: "56ch" }}
           >
-            <span className="block">
-              <IkonPin className="h-8 w-8 text-resmi" />
-              <span className="judul-registri mt-4 block text-xl text-tinta">
-                Peta bidang
-              </span>
-              <span className="mt-3 block text-sm leading-relaxed text-tinta-lembut">
-                Letak {berkoordinat} bidang di peta Sanggrahan. Urutkan dari yang
-                paling dekat dengan posisi Anda sekarang.
-              </span>
-            </span>
-            <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-resmi">
-              Buka peta
-              <IkonPanah className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-1" />
-            </span>
-          </Link>
+            Bidang usaha Anda dicatat di sini tanpa biaya. Tidak ada iuran,
+            tidak ada potongan penjualan, dan tidak ada perantara. Cukup kirim
+            data dan foto ke pengurus.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <a
+              href={tautanWa(
+                site.kontakPengurus.whatsapp,
+                `Halo, saya warga ${site.kampung} dan ingin mendaftarkan usaha saya ke registri ${site.nama}.`,
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-[2px] border-[1.5px] px-5 py-3 text-base font-semibold"
+              style={{
+                backgroundColor: "var(--color-resmi)",
+                borderColor: "var(--color-resmi-tua)",
+                color: "var(--color-putih)",
+              }}
+            >
+              Hubungi pengurus
+            </a>
+            <Link
+              href="/daftar"
+              className="rounded-[2px] border-[1.5px] border-garis-tegas px-5 py-3 text-base font-semibold text-tinta"
+            >
+              Baca syaratnya
+            </Link>
+          </div>
         </div>
       </section>
     </>

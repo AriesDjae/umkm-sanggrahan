@@ -17,6 +17,26 @@ const Peta = dynamic(() => import("./PetaUmkm"), {
   ),
 });
 
-export default function PetaLazy({ daftar }: { daftar: Umkm[] }) {
-  return <Peta daftar={daftar} />;
+/** Sama, tapi setinggi peta ringkas — supaya beranda tidak melonjak saat peta masuk. */
+const PetaRingkas = dynamic(() => import("./PetaUmkm"), {
+  ssr: false,
+  loading: () => (
+    <div className="lembar grid h-[25rem] place-items-center sm:h-[30rem]">
+      <p className="label-registri">Memuat peta…</p>
+    </div>
+  ),
+});
+
+export default function PetaLazy({
+  daftar,
+  ringkas = false,
+}: {
+  daftar: Umkm[];
+  ringkas?: boolean;
+}) {
+  return ringkas ? (
+    <PetaRingkas daftar={daftar} ringkas />
+  ) : (
+    <Peta daftar={daftar} />
+  );
 }

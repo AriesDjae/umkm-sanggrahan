@@ -308,3 +308,69 @@ input[type="search"]::-webkit-search-cancel-button {
   background: none;
   border: none;
 }
+
+/*
+  Gelembung keterangan bidang, dipakai peta ringkas di beranda. Bentuknya
+  mengikuti lembar registri: bersudut tegas, bergaris 1.5px, tanpa bayangan
+  lembut — bukan balon kartu.
+
+  Pemilihnya sengaja diawali .leaflet-container: berkas gaya bawaan Leaflet
+  dimuat sesudah berkas ini, jadi aturan sesederhana .leaflet-popup-tip kalah
+  dan sudut bulat 12px bawaannya yang menang.
+*/
+.leaflet-container .leaflet-popup-content-wrapper {
+  background: var(--color-putih);
+  color: var(--color-tinta);
+  border: 1.5px solid var(--color-garis);
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgb(20 23 28 / 0.18);
+}
+
+.leaflet-container .leaflet-popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.75rem 0.9rem;
+  min-width: 12rem;
+  line-height: 1.45;
+}
+
+.leaflet-container .leaflet-popup-tip {
+  background: var(--color-putih);
+  border: 1.5px solid var(--color-garis);
+  box-shadow: none;
+}
+
+.gelembung-nomor {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-tinta-lembut);
+  font-variant-numeric: tabular-nums;
+}
+
+.gelembung-nama {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-tinta);
+}
+
+.gelembung-baris {
+  font-size: 0.8125rem;
+  color: var(--color-tinta-lembut);
+  font-variant-numeric: tabular-nums;
+}
+
+.gelembung-tautan {
+  margin-top: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 1.5px solid var(--color-garis);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-resmi);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}

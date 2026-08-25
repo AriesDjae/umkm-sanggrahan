@@ -73,7 +73,7 @@ Google Bisnisku.
 
 ## Brand Commitments
 
-- Nama program: **UMKM Sanggrahan**.
+- Nama program: **Usaha Warga Sanggrahan**.
 - **Logo dan warna resmi kelurahan bersifat mengikat**, tetapi berkasnya belum
   diterima. Identitas visual harus dibangun dengan slot logo yang siap diisi dan
   palet yang bisa disetel ulang mengikuti warna resmi begitu berkasnya ada.

@@ -194,9 +194,9 @@ function nomorBerikutnya(rw) {
 }
 
 async function main() {
-  console.log(warna.judul("\n╭───────────────────────────────────────────╮"));
-  console.log(warna.judul("│   Tambah UMKM baru — UMKM Sanggrahan      │"));
-  console.log(warna.judul("╰───────────────────────────────────────────╯"));
+  console.log(warna.judul("\n╭──────────────────────────────────────────────────╮"));
+  console.log(warna.judul("│   Tambah UMKM baru — Usaha Warga Sanggrahan      │"));
+  console.log(warna.judul("╰──────────────────────────────────────────────────╯"));
   console.log(
     warna.redup("Isi pertanyaan berikut. Bertanda * wajib diisi. Tekan Enter untuk melewati.\n"),
   );

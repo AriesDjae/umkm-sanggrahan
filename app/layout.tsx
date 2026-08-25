@@ -48,11 +48,12 @@ const KONTRAK = `
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.nama} — Registri Usaha Warga Semaki, Umbulharjo`,
+    default: `${site.nama} — UMKM & Jasa Semaki, Umbulharjo`,
     template: `%s | ${site.nama}`,
   },
   description: site.deskripsi,
   keywords: [
+    "Usaha Warga Sanggrahan",
     "UMKM Sanggrahan",
     "UMKM Semaki",
     "UMKM Umbulharjo",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: site.url,
     siteName: site.nama,
-    title: `${site.nama} — Registri Usaha Warga Semaki, Umbulharjo`,
+    title: `${site.nama} — UMKM & Jasa Semaki, Umbulharjo`,
     description: site.deskripsi,
   },
   twitter: {

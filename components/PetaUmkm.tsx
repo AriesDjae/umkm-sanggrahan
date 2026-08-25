@@ -31,6 +31,35 @@ function tulisJarak(km: number): string {
 }
 
 /**
+ * Isi penanda dan gelembung peta dirakit sebagai untaian HTML — itu yang
+ * diminta Leaflet. Data UMKM ditulis pengurus, bukan pengunjung, tapi tetap
+ * dijinakkan supaya tanda kutip atau kurung sudut pada nama usaha tidak
+ * merusak susunannya.
+ */
+function aman(teks: string): string {
+  return teks
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/**
+ * Gelembung keterangan bidang, hanya dipakai pada peta ringkas di beranda.
+ * Pada peta penuh keterangan itu sudah dipikul daftar di sebelah kanan, jadi
+ * gelembungnya justru menutupi peta.
+ */
+function isiGelembung(u: Titik): string {
+  const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
+  return `
+    <span class="gelembung-nomor">${aman(u.nomor ?? "")} · ${aman(kat.nama)}</span>
+    <span class="gelembung-nama">${aman(u.nama)}</span>
+    <span class="gelembung-baris">${aman(u.alamat)}</span>
+    <span class="gelembung-baris">${aman(rentangHarga(u))}</span>
+    <a class="gelembung-tautan" href="/umkm/${encodeURIComponent(u.slug)}">Buka lembar bidang</a>`;
+}
+
+/**
  * Penanda peta digambar sebagai patok bidang: kotak kode kategori dan nomor
  * bidangnya. Tidak ada warna yang menanggung arti — kodenya yang menanggung.
  */
@@ -70,7 +99,14 @@ function buatPenanda(u: Titik, terpilih: boolean): L.DivIcon {
   });
 }
 
-export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
+export default function PetaUmkm({
+  daftar,
+  ringkas = false,
+}: {
+  daftar: Umkm[];
+  /** Peta pendek tanpa daftar samping, untuk disisipkan di beranda. */
+  ringkas?: boolean;
+}) {
   const wadah = useRef<HTMLDivElement>(null);
   const peta = useRef<L.Map | null>(null);
   const penanda = useRef<Map<string, L.Marker>>(new Map());
@@ -85,7 +121,10 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
   const [hanyaBuka, setHanyaBuka] = useState(false);
 
   const kini = useJamKini();
-  const acuan = useMemo(() => (kini === null ? undefined : new Date(kini)), [kini]);
+  const acuan = useMemo(
+    () => (kini === null ? undefined : new Date(kini)),
+    [kini],
+  );
 
   const titik = useMemo(
     () => daftar.filter((u): u is Titik => Boolean(u.koordinat)),
@@ -100,7 +139,8 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
   const tersaring = useMemo(() => {
     return titik.filter((u) => {
       if (kategori !== "semua" && u.kategori !== kategori) return false;
-      if (hanyaBuka && statusBuka(u.jam, acuan).keadaan !== "buka") return false;
+      if (hanyaBuka && statusBuka(u.jam, acuan).keadaan !== "buka")
+        return false;
       return true;
     });
   }, [titik, kategori, hanyaBuka, acuan]);
@@ -108,7 +148,8 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
   const berurut = useMemo(() => {
     if (!posisiSaya) return tersaring;
     return [...tersaring].sort(
-      (a, b) => jarakKm(posisiSaya, a.koordinat) - jarakKm(posisiSaya, b.koordinat),
+      (a, b) =>
+        jarakKm(posisiSaya, a.koordinat) - jarakKm(posisiSaya, b.koordinat),
     );
   }, [tersaring, posisiSaya]);
 
@@ -152,19 +193,30 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
         title: `${u.nomor} — ${u.nama}`,
         alt: u.nama,
         riseOnHover: true,
-      })
-        .addTo(m)
-        .on("click", () => setTerpilih(u.slug));
+      }).addTo(m);
+
+      if (ringkas) {
+        // Tanpa daftar samping, klik penanda harus menjelaskan dirinya sendiri.
+        // Penandanya sengaja tidak ikut ditandai terpilih: menandainya menyusun
+        // ulang seluruh penanda, dan gelembung yang baru dibuka ikut terbuang
+        // bersama penanda lamanya.
+        p.bindPopup(isiGelembung(u), { closeButton: false, offset: [0, -30] });
+      } else {
+        p.on("click", () => setTerpilih(u.slug));
+      }
+
       penanda.current.set(u.slug, p);
     }
 
     if (tersaring.length > 0 && !terpilih) {
       const batas = L.latLngBounds(
-        tersaring.map((u) => [u.koordinat.lat, u.koordinat.lng] as [number, number]),
+        tersaring.map(
+          (u) => [u.koordinat.lat, u.koordinat.lng] as [number, number],
+        ),
       );
       m.fitBounds(batas, { padding: [60, 60], maxZoom: 17 });
     }
-  }, [tersaring, terpilih]);
+  }, [tersaring, terpilih, ringkas]);
 
   /* ---- Titik lokasi pengunjung ---- */
   useEffect(() => {
@@ -208,13 +260,14 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
         setPosisiSaya({ lat: pos.coords.latitude, lng: pos.coords.longitude });
         setStatusLokasi("diam");
       },
-      (e) => setStatusLokasi(e.code === e.PERMISSION_DENIED ? "ditolak" : "gagal"),
+      (e) =>
+        setStatusLokasi(e.code === e.PERMISSION_DENIED ? "ditolak" : "gagal"),
       { enableHighAccuracy: true, timeout: 10_000 },
     );
   }, []);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_24rem]">
+    <div className={ringkas ? "" : "grid gap-6 lg:grid-cols-[1fr_24rem]"}>
       {/* ---- Peta ---- */}
       <div className="lembar overflow-hidden">
         <div className="kop flex flex-wrap items-center gap-2 px-3 py-3">
@@ -224,7 +277,9 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
             aria-pressed={hanyaBuka}
             className="rounded-[2px] border-[1.5px] px-3 py-1.5 text-sm font-semibold"
             style={{
-              borderColor: hanyaBuka ? "var(--color-buka)" : "var(--color-garis-tegas)",
+              borderColor: hanyaBuka
+                ? "var(--color-buka)"
+                : "var(--color-garis-tegas)",
               backgroundColor: hanyaBuka ? "var(--color-buka)" : "transparent",
               color: hanyaBuka ? "var(--color-putih)" : "var(--color-tinta)",
             }}
@@ -243,7 +298,9 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
                 aria-label={`Saring kategori ${k.nama}`}
                 className="grid h-8 w-8 place-items-center rounded-[2px] border-[1.5px] text-sm font-bold"
                 style={{
-                  borderColor: aktif ? "var(--color-resmi)" : "var(--color-garis-tegas)",
+                  borderColor: aktif
+                    ? "var(--color-resmi)"
+                    : "var(--color-garis-tegas)",
                   backgroundColor: aktif ? "var(--color-resmi)" : "transparent",
                   color: aktif ? "var(--color-putih)" : "var(--color-tinta)",
                 }}
@@ -277,80 +334,88 @@ export default function PetaUmkm({ daftar }: { daftar: Umkm[] }) {
 
         <div
           ref={wadah}
-          className="h-[62vh] min-h-[26rem] w-full"
+          className={
+            ringkas
+              ? "h-[22rem] w-full sm:h-[27rem]"
+              : "h-[62vh] min-h-[26rem] w-full"
+          }
           role="application"
           aria-label="Peta letak bidang usaha Sanggrahan"
         />
       </div>
 
       {/* ---- Daftar bidang ---- */}
-      <div>
-        <p className="label-registri">
-          {berurut.length} bidang di peta
-          {posisiSaya ? " · diurutkan dari yang terdekat" : ""}
-        </p>
-
-        <ul className="mt-3 max-h-[62vh] overflow-y-auto border-t-[1.5px] border-garis">
-          {berurut.map((u) => {
-            const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
-            const aktif = u.slug === terpilih;
-            return (
-              <li key={u.slug} className="border-b-[1.5px] border-garis">
-                <div
-                  className="px-2 py-3 transition-colors"
-                  style={{
-                    backgroundColor: aktif ? "var(--color-resmi-muda)" : "transparent",
-                  }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => pilih(u.slug)}
-                    aria-pressed={aktif}
-                    className="w-full text-left"
-                  >
-                    <span className="flex items-baseline gap-2">
-                      <span className="nomor-bidang text-xs text-tinta-lembut">
-                        {u.nomor}
-                      </span>
-                      {posisiSaya && (
-                        <span className="angka ml-auto text-xs font-semibold text-tinta">
-                          {tulisJarak(jarakKm(posisiSaya, u.koordinat))}
-                        </span>
-                      )}
-                    </span>
-                    <span className="mt-1 flex items-center gap-2.5">
-                      <KodeBidang kategori={kat} />
-                      <span className="judul-registri truncate text-base text-tinta">
-                        {u.nama}
-                      </span>
-                    </span>
-                    <span className="mt-1 block text-xs text-tinta-lembut">
-                      {u.alamat} · {rentangHarga(u)}
-                    </span>
-                  </button>
-
-                  <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <TandaBuka jam={u.jam} />
-                    <Link
-                      href={`/umkm/${u.slug}`}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-resmi underline underline-offset-4"
-                    >
-                      Buka lembar
-                      <IkonPanah className="h-3 w-3" />
-                    </Link>
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-
-        {berurut.length === 0 && (
-          <p className="border-b-[1.5px] border-garis px-4 py-10 text-center text-sm text-tinta-lembut">
-            Tidak ada bidang yang cocok dengan saringan ini.
+      {!ringkas && (
+        <div>
+          <p className="label-registri">
+            {berurut.length} bidang di peta
+            {posisiSaya ? " · diurutkan dari yang terdekat" : ""}
           </p>
-        )}
-      </div>
+
+          <ul className="mt-3 max-h-[62vh] overflow-y-auto border-t-[1.5px] border-garis">
+            {berurut.map((u) => {
+              const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
+              const aktif = u.slug === terpilih;
+              return (
+                <li key={u.slug} className="border-b-[1.5px] border-garis">
+                  <div
+                    className="px-2 py-3 transition-colors"
+                    style={{
+                      backgroundColor: aktif
+                        ? "var(--color-resmi-muda)"
+                        : "transparent",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => pilih(u.slug)}
+                      aria-pressed={aktif}
+                      className="w-full text-left"
+                    >
+                      <span className="flex items-baseline gap-2">
+                        <span className="nomor-bidang text-xs text-tinta-lembut">
+                          {u.nomor}
+                        </span>
+                        {posisiSaya && (
+                          <span className="angka ml-auto text-xs font-semibold text-tinta">
+                            {tulisJarak(jarakKm(posisiSaya, u.koordinat))}
+                          </span>
+                        )}
+                      </span>
+                      <span className="mt-1 flex items-center gap-2.5">
+                        <KodeBidang kategori={kat} />
+                        <span className="judul-registri truncate text-base text-tinta">
+                          {u.nama}
+                        </span>
+                      </span>
+                      <span className="mt-1 block text-xs text-tinta-lembut">
+                        {u.alamat} · {rentangHarga(u)}
+                      </span>
+                    </button>
+
+                    <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+                      <TandaBuka jam={u.jam} />
+                      <Link
+                        href={`/umkm/${u.slug}`}
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-resmi underline underline-offset-4"
+                      >
+                        Buka lembar
+                        <IkonPanah className="h-3 w-3" />
+                      </Link>
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+
+          {berurut.length === 0 && (
+            <p className="border-b-[1.5px] border-garis px-4 py-10 text-center text-sm text-tinta-lembut">
+              Tidak ada bidang yang cocok dengan saringan ini.
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

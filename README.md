@@ -1,4 +1,4 @@
-# UMKM Sanggrahan
+# Usaha Warga Sanggrahan
 
 Registri usaha warga **Kampung Sanggrahan, Kelurahan Semaki, Kemantren
 Umbulharjo, Kota Yogyakarta** — RW 1 dan RW 3. Setiap UMKM adalah satu bidang
@@ -54,7 +54,7 @@ siapa penggunanya, apa batasannya, apa yang tidak boleh dikarang — di
 
 ```
 app/                     Halaman web
-  page.tsx                 Beranda — kop registri dan petikan lembar
+  page.tsx                 Beranda — kop, profil singkat, peta, petikan lembar
   umkm/                    Daftar UMKM & halaman detail tiap usaha
   peta/                    Peta bidang (Leaflet + OpenStreetMap)
   kategori/[kategori]/     Halaman per kategori

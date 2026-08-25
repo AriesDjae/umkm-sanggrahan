@@ -1,5 +1,5 @@
 ---
-name: UMKM Sanggrahan
+name: Usaha Warga Sanggrahan
 description: Direktori UMKM kampung yang dibangun sebagai lembar registri bidang resmi
 colors:
   lembar: "#f7f8fa"
@@ -102,7 +102,7 @@ components:
     padding: "6px 8px"
 ---
 
-# Design System: UMKM Sanggrahan
+# Design System: Usaha Warga Sanggrahan
 
 ## Overview
 
@@ -239,6 +239,11 @@ atas sebuah judul selalu lebih besar daripada di bawahnya.
 Halaman peta memakai `[1fr 24rem]` pada lg; petanya `62vh` dengan lantai
 `26rem`, dan daftar di sampingnya bergulir sendiri dengan tinggi maksimum sama.
 
+Beranda menaruh **profil singkat dan peta berdampingan** tepat di bawah kop,
+`[23rem 1fr]` pada lg dengan `items-start` — profil sebagai blok identitas
+wilayah di kiri, peta ringkas di kanan. Peta ringkas memakai komponen peta yang
+sama tanpa daftar sampingnya, setinggi `22rem` (`27rem` pada sm).
+
 ## Elevation & Depth
 
 **Sistem ini tidak memakai bayangan sama sekali.** Kedalaman ditanggung garis
@@ -317,6 +322,17 @@ tempatnya diisi kotak monogram bergaris biru resmi.
 Penanda di peta adalah patok bidang: kotak kode kategori dan nomor bidangnya,
 bergaris 1.5px, dengan tiang pendek di bawah. Terpilih berarti terisi biru
 resmi. Bukan pin bawaan Leaflet.
+
+### Gelembung Bidang
+Hanya pada peta ringkas di beranda, tempat tidak ada daftar samping yang bisa
+menjelaskan patok yang ditekan. Bentuknya lembar registri yang mengecil:
+bersudut 2px, bergaris 1.5px, berisi nomor dan kategori sebagai label kapital,
+nama usaha sebagai judul, alamat dan rentang harga, lalu satu tautan ke lembar
+bidangnya di balik garis pemisah. Pada peta penuh gelembung ini tidak dipakai —
+di sana ia hanya menutupi peta.
+
+Pemilih CSS-nya diawali `.leaflet-container` karena berkas gaya bawaan Leaflet
+dimuat sesudah `globals.css`; tanpa itu sudut bulat 12px bawaannya yang menang.
 
 ## Do's and Don'ts
 

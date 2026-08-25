@@ -14,7 +14,7 @@ export default function Footer() {
     >
       <div className="mx-auto grid max-w-[80rem] gap-12 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <p className="judul-registri text-xl text-tinta">Registri UMKM Sanggrahan</p>
+          <p className="judul-registri text-xl text-tinta">{site.nama}</p>
           <p
             className="mt-4 text-sm leading-relaxed text-tinta-lembut"
             style={{ maxWidth: "44ch" }}

@@ -48,7 +48,7 @@ export default function Header() {
           )}
           <span className="leading-tight">
             <span className="judul-registri block text-lg text-tinta sm:text-xl">
-              Registri UMKM Sanggrahan
+              {site.nama}
             </span>
             <span className="label-registri mt-0.5 block">
               {site.kelurahan} · {site.kemantren} · RW 1 &amp; 3
