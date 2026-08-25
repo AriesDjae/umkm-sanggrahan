@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+
+    // Berkas bawaan skill desain (impeccable) — kode pihak ketiga, bukan
+    // kode proyek ini, jadi tidak ikut diperiksa gaya penulisannya.
+    ".claude/**",
+    ".agents/**",
+    ".cursor/**",
+    ".impeccable/**",
   ]),
 ]);
 

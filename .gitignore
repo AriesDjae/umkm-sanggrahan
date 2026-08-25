@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Tangkapan layar untuk pemeriksaan desain (bisa dibuat ulang)
+.impeccable/review/
+
+# Salinan skill impeccable (dibuat ulang otomatis oleh perkakas, 3 salinan identik)
+/.agents/
+/.cursor/
+/.claude/skills/
+
+# Status sesi perkakas desain (sementara, tidak perlu disimpan)
+/.impeccable/questions/

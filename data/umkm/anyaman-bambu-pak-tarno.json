@@ -1,0 +1,67 @@
+{
+  "nama": "Anyaman Bambu Pak Tarno",
+  "pemilik": "Sutarno",
+  "rw": 3,
+  "rt": "01",
+  "kategori": "Kerajinan",
+  "deskripsi": "Kerajinan anyaman bambu buatan tangan: besek, tampah, kap lampu, dan tempat buah. Bambu diambil dari kebun sendiri lalu diawetkan agar tidak mudah dimakan rayap. Bisa pesan ukuran khusus.",
+  "alamat": "RT 01 RW 03, Sanggrahan",
+  "maps": "",
+  "koordinat": {
+    "lat": -7.8019,
+    "lng": 110.3823
+  },
+  "jamBuka": "07.00 – 16.00 (setiap hari)",
+  "jam": {
+    "buka": "07:00",
+    "tutup": "16:00",
+    "hari": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "whatsapp": "628110000002",
+  "marketplace": {
+    "shopee": "",
+    "tokopedia": "",
+    "tiktok": ""
+  },
+  "sosmed": {
+    "instagram": "",
+    "facebook": ""
+  },
+  "foto": "",
+  "produk": [
+    {
+      "nama": "Besek Bambu",
+      "harga": 8000,
+      "satuan": "buah",
+      "foto": ""
+    },
+    {
+      "nama": "Tampah Bambu 40 cm",
+      "harga": 25000,
+      "satuan": "buah",
+      "foto": ""
+    },
+    {
+      "nama": "Kap Lampu Anyaman",
+      "harga": 85000,
+      "satuan": "buah",
+      "foto": ""
+    },
+    {
+      "nama": "Tempat Buah Anyaman",
+      "harga": 45000,
+      "satuan": "buah",
+      "foto": ""
+    }
+  ],
+  "unggulan": true,
+  "aktif": true
+}

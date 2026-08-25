@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-24T00:00:00.000Z",
+  "title": "Design System: UMKM Sanggrahan",
+  "extensions": {
+    "colorMeta": {
+      "resmi": {
+        "role": "primary",
+        "displayName": "Biru Resmi",
+        "tonalRamp": ["#e6ecf6", "#1b3b6f", "#10254a"]
+      },
+      "stempel": {
+        "role": "accent",
+        "displayName": "Merah Stempel",
+        "tonalRamp": ["#9b3627"]
+      },
+      "lembar": {
+        "role": "neutral",
+        "displayName": "Lembar Registri",
+        "tonalRamp": ["#ffffff", "#f7f8fa", "#eceff3", "#e0e4ea", "#878d96", "#7c8593"]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "tonalRamp": ["#4b5360", "#14171c"]
+      },
+      "buka": { "role": "status", "displayName": "Hijau Buka" },
+      "tutup": { "role": "status", "displayName": "Kelabu Tutup" }
+    },
+    "typographyMeta": {
+      "judul-besar": {
+        "displayName": "Judul Besar",
+        "purpose": "Judul halaman. Satu per halaman."
+      },
+      "judul-bidang": {
+        "displayName": "Judul Bidang",
+        "purpose": "Nama usaha di lembar bidang, diset sampai skala poster sebagai antarmukanya sendiri."
+      },
+      "label": {
+        "displayName": "Label Kolom",
+        "purpose": "Menamai kolom, tabel, dan daftar. Tidak pernah berdiri di atas judul sebagai kicker."
+      },
+      "nomor": {
+        "displayName": "Nomor Bidang",
+        "purpose": "Nomor registri, selalu tabular-nums dengan jarak huruf lebar."
+      }
+    },
+    "shadows": [
+      {
+        "name": "patok-peta",
+        "value": "0 1px 3px rgba(20,23,28,.3)",
+        "purpose": "Satu-satunya bayangan di sistem ini. Dipakai hanya pada patok di atas ubin peta, supaya terbaca di atas media asing — bukan bahasa kedalaman sistem."
+      }
+    ],
+    "motion": [
+      {
+        "name": "garis-ditarik",
+        "value": "520ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Satu-satunya momen gerak situs: garis dasar tiap baris ditarik dari kiri ke kanan saat lembar dibuka, berundak 45ms per baris. Dimatikan pada prefers-reduced-motion."
+      },
+      {
+        "name": "isi-muncul",
+        "value": "340ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Isi baris naik 3px dan memudar masuk, seiring garisnya ditarik."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "wadah", "value": "80rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Baris Bidang",
+      "kind": "custom",
+      "refersTo": "kunci-kategori-aktif",
+      "description": "Satu UMKM sebagai satu baris registri bernomor. Bukan kartu: tidak ada sudut membulat, tidak ada bayangan, foto kecil dan di kanan.",
+      "html": "<li class=\"ds-baris\"><a><span class=\"ds-nomor\">SGR-01-002</span><span class=\"ds-kode\"><i>K</i><b></b></span><span class=\"ds-isi\"><strong>Keripik Bu Sri</strong><em>RT 02 RW 01, Sanggrahan</em></span></a></li>",
+      "css": ".ds-baris { border-bottom: 1.5px solid #878d96; list-style: none; } .ds-baris a { display: grid; grid-template-columns: 7.5rem auto 1fr auto; gap: 0 1rem; align-items: baseline; padding: 20px 16px; text-decoration: none; } .ds-baris a:hover { background: #e6ecf6; } .ds-nomor { font-variant-numeric: tabular-nums; font-weight: 600; letter-spacing: .08em; font-size: 14px; color: #4b5360; } .ds-kode { display: inline-flex; gap: 8px; align-self: center; } .ds-kode i { display: grid; place-items: center; width: 24px; height: 24px; border: 1.5px solid #14171c; font-style: normal; font-weight: 700; font-size: 12px; } .ds-kode b { width: 16px; height: 24px; border: 1.5px solid #7c8593; background-color: #eceff3; background-image: repeating-linear-gradient(45deg, #7c8593 0 1.5px, transparent 1.5px 5px); } .ds-isi strong { display: block; font-weight: 700; font-size: 1.9rem; line-height: .98; letter-spacing: -.03em; color: #14171c; } .ds-isi em { display: block; margin-top: 6px; font-style: normal; font-size: 14px; color: #4b5360; }"
+    },
+    {
+      "name": "Tanda Buka",
+      "kind": "custom",
+      "refersTo": "sakelar-buka",
+      "description": "Keadaan dibawa oleh bentuk petak, bukan warna: terisi = buka, separuh = segera tutup, bersilang = tutup.",
+      "html": "<span class=\"ds-tanda\"><svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" fill=\"none\"><rect x=\".9\" y=\".9\" width=\"10.2\" height=\"10.2\" stroke=\"currentColor\" stroke-width=\"1.8\"/><rect x=\"2.6\" y=\"2.6\" width=\"6.8\" height=\"6.8\" fill=\"currentColor\"/></svg><b>BUKA</b><em>s.d. 17:00</em></span>",
+      "css": ".ds-tanda { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #0f5d3a; } .ds-tanda b { font-weight: 600; letter-spacing: .1em; } .ds-tanda em { font-style: normal; font-weight: 400; border-left: 1.5px solid rgba(15,93,58,.3); padding-left: 8px; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Tombol Utama",
+      "kind": "button",
+      "refersTo": "tombol-utama",
+      "description": "Satu-satunya warna tindakan. Tombol WhatsApp memakai gaya yang sama — tidak ada hijau WhatsApp di sistem ini.",
+      "html": "<a class=\"ds-tombol\">Buka registri lengkap</a>",
+      "css": ".ds-tombol { display: inline-flex; align-items: center; gap: 10px; background: #1b3b6f; color: #fff; border: 1.5px solid #10254a; border-radius: 2px; padding: 12px 20px; font-weight: 600; text-decoration: none; transition: background .15s; } .ds-tombol:hover { background: #10254a; }"
+    },
+    {
+      "name": "Patok Peta",
+      "kind": "custom",
+      "refersTo": "sakelar-diam",
+      "description": "Penanda peta: kotak kode kategori dan nomor bidangnya. Bukan pin bawaan Leaflet.",
+      "html": "<div class=\"ds-patok\"><div><span>K</span><b>SGR-01-002</b></div><i></i></div>",
+      "css": ".ds-patok { display: flex; flex-direction: column; align-items: center; } .ds-patok > div { display: flex; border: 1.5px solid #14171c; background: #fff; color: #14171c; box-shadow: 0 1px 3px rgba(20,23,28,.3); } .ds-patok span { display: grid; place-items: center; width: 20px; height: 20px; font-weight: 700; font-size: 11px; border-right: 1.5px solid #14171c; } .ds-patok b { padding: 0 6px; line-height: 20px; white-space: nowrap; font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .05em; } .ds-patok i { width: 1.5px; height: 10px; background: #14171c; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Registri Bidang",
+    "thesis": "Direktori ini adalah registri resmi. Tiap usaha satu bidang terdaftar: bernomor, berbatas, bertanda periksa. Kategori dan keadaan dibawa oleh kode dan bentuk, bukan oleh warna.",
+    "seed": "f35d03c7",
+    "reroll": 1,
+    "notCanonized": [
+      "Bayangan pada patok peta (0 1px 3px): dipertahankan karena patok harus terbaca di atas ubin OpenStreetMap yang ramai, bukan karena sistem ini punya bahasa kedalaman. Jangan diperluas ke komponen lain.",
+      "Kemiringan -3deg pada stempel: dipertahankan karena itu perilaku stempel karet sungguhan pada dokumen, dan hanya dipakai pada satu elemen per layar. Bukan izin untuk memiringkan elemen lain."
+    ]
+  }
+}

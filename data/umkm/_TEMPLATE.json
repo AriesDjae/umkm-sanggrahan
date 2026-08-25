@@ -1,0 +1,24 @@
+{
+  "_petunjuk": "Salin file ini, ganti namanya jadi nama-usaha.json (huruf kecil, pakai tanda hubung), lalu isi datanya. File yang diawali garis bawah (_) tidak ikut tampil di web.",
+  "nomor": "SGR-01-000",
+  "nama": "Nama Usaha",
+  "pemilik": "Nama Pemilik",
+  "rw": 1,
+  "rt": "01",
+  "kategori": "Kuliner",
+  "deskripsi": "Ceritakan usaha ini dalam 2-3 kalimat: apa yang dijual, apa keistimewaannya, sejak kapan berdiri.",
+  "alamat": "RT 01 RW 01, Sanggrahan",
+  "maps": "",
+  "koordinat": { "lat": -7.8009, "lng": 110.3806 },
+  "jamBuka": "",
+  "jam": { "buka": "08:00", "tutup": "17:00", "hari": [1, 2, 3, 4, 5, 6] },
+  "whatsapp": "628xxxxxxxxxx",
+  "marketplace": { "shopee": "", "tokopedia": "", "tiktok": "", "gofood": "" },
+  "sosmed": { "instagram": "", "facebook": "" },
+  "foto": "",
+  "produk": [
+    { "nama": "Nama Produk", "harga": 10000, "satuan": "pcs", "foto": "", "keterangan": "" }
+  ],
+  "unggulan": false,
+  "aktif": true
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "kuliner",
+    "nama": "Kuliner",
+    "kode": "K",
+    "ikon": "mangkuk",
+    "arsir": "arsir-miring-rapat",
+    "deskripsi": "Makanan, minuman, jajanan, dan oleh-oleh buatan warga Sanggrahan."
+  },
+  {
+    "slug": "kerajinan",
+    "nama": "Kerajinan",
+    "kode": "R",
+    "ikon": "anyaman",
+    "arsir": "arsir-silang",
+    "deskripsi": "Produk tangan warga: anyaman, kayu, souvenir, dan hiasan rumah."
+  },
+  {
+    "slug": "fashion-konveksi",
+    "nama": "Fashion & Konveksi",
+    "kode": "F",
+    "ikon": "gunting",
+    "arsir": "arsir-tegak",
+    "deskripsi": "Jahit, konveksi, batik, mukena, dan busana produksi rumahan."
+  },
+  {
+    "slug": "pertanian-ternak",
+    "nama": "Pertanian & Ternak",
+    "kode": "T",
+    "ikon": "daun",
+    "arsir": "arsir-titik",
+    "deskripsi": "Sayur segar, hasil kebun, bibit, telur, ikan, dan hasil ternak."
+  },
+  {
+    "slug": "jasa",
+    "nama": "Jasa",
+    "kode": "J",
+    "ikon": "kunci",
+    "arsir": "arsir-miring-renggang",
+    "deskripsi": "Servis, bengkel, laundry, salon, rias, dan jasa lain di kampung."
+  },
+  {
+    "slug": "lainnya",
+    "nama": "Lainnya",
+    "kode": "L",
+    "ikon": "toko",
+    "arsir": "arsir-penuh",
+    "deskripsi": "Usaha warga yang belum masuk kategori mana pun di atas."
+  }
+]

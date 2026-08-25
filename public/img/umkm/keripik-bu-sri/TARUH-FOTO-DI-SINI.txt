@@ -1,0 +1,5 @@
+Taruh foto usaha ini di folder ini:
+  utama.jpg  -> foto usaha
+  1.jpg      -> foto produk pertama
+  2.jpg      -> foto produk kedua
+  dst.

@@ -1,0 +1,68 @@
+{
+  "nama": "Sayur Hidroponik Mas Adi",
+  "pemilik": "Adi Nugroho",
+  "rw": 3,
+  "rt": "03",
+  "kategori": "Pertanian & Ternak",
+  "deskripsi": "Sayuran hidroponik segar dipanen sesuai pesanan, tanpa pestisida. Selada, pakcoy, kangkung, dan bayam merah. Gratis antar untuk wilayah desa dan sekitarnya dengan pembelian minimal.",
+  "alamat": "RT 03 RW 03, Sanggrahan",
+  "maps": "",
+  "koordinat": {
+    "lat": -7.8027,
+    "lng": 110.3812
+  },
+  "jamBuka": "06.00 – 17.00 (setiap hari)",
+  "jam": {
+    "buka": "06:00",
+    "tutup": "17:00",
+    "hari": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "whatsapp": "628110000004",
+  "marketplace": {
+    "shopee": "",
+    "tokopedia": "",
+    "tiktok": ""
+  },
+  "sosmed": {
+    "instagram": "",
+    "facebook": ""
+  },
+  "foto": "",
+  "produk": [
+    {
+      "nama": "Selada Keriting",
+      "harga": 15000,
+      "satuan": "250 gr",
+      "foto": ""
+    },
+    {
+      "nama": "Pakcoy",
+      "harga": 12000,
+      "satuan": "250 gr",
+      "foto": ""
+    },
+    {
+      "nama": "Kangkung Hidroponik",
+      "harga": 10000,
+      "satuan": "ikat",
+      "foto": ""
+    },
+    {
+      "nama": "Paket Sayur Mingguan",
+      "harga": 50000,
+      "satuan": "paket",
+      "keterangan": "Isi 4 jenis sayur",
+      "foto": ""
+    }
+  ],
+  "unggulan": true,
+  "aktif": true
+}
