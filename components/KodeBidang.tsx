@@ -22,7 +22,7 @@ export default function KodeBidang({
       <span
         aria-hidden
         className={`grid shrink-0 place-items-center border-[1.5px] border-tinta font-bold ${
-          besar ? "h-9 w-9 text-lg" : "h-6 w-6 text-xs"
+          besar ? "h-10 w-10 text-lg" : "h-6 w-6 text-xs"
         }`}
       >
         {kategori.kode}
@@ -30,7 +30,7 @@ export default function KodeBidang({
       <span
         aria-hidden
         className={`arsir ${kategori.arsir} shrink-0 border-[1.5px] border-garis-tegas ${
-          besar ? "h-9 w-6" : "h-6 w-4"
+          besar ? "h-10 w-6" : "h-6 w-4"
         }`}
       />
       <span className={tampilkanNama ? "label-registri" : "sr-only"}>

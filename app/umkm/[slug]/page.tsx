@@ -137,9 +137,9 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
         </nav>
 
         {/* ---- Lembar bidang ---- */}
-        <article className="lembar mt-5">
+        <article className="lembar mt-6">
           {/* Kop lembar */}
-          <header className="kop flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-4 sm:px-7">
+          <header className="kop flex flex-wrap items-center justify-between gap-x-6 gap-y-4 px-4 py-4 sm:px-8">
             <span className="flex items-center gap-4">
               <span className="label-registri">Nomor bidang</span>
               <span className="nomor-bidang text-base text-tinta sm:text-lg">
@@ -149,20 +149,20 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
             <KodeBidang kategori={kat} tampilkanNama />
           </header>
 
-          <div className="px-4 py-8 sm:px-7 sm:py-10">
+          <div className="px-4 py-8 sm:px-8 sm:py-10">
             <h1 className="judul-registri text-[clamp(2.2rem,1.5rem+3.4vw,3.8rem)] text-tinta">
               {u.nama}
             </h1>
 
-            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
               <TandaBuka jam={u.jam} ukuran="besar" />
-              <span className="stempel px-3 py-1.5 text-[11px] font-bold">
+              <span className="stempel px-4 py-2 text-[11px] font-bold">
                 DIPERIKSA PENGURUS
               </span>
             </div>
 
             <p
-              className="mt-7 text-base leading-relaxed whitespace-pre-line text-tinta"
+              className="mt-8 text-base leading-relaxed whitespace-pre-line text-tinta"
               style={{ maxWidth: "68ch" }}
             >
               {u.deskripsi}
@@ -186,7 +186,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
               <Baris label="Pemilik">{u.pemilik}</Baris>
               <Baris label="Alamat">
                 <span className="block">{u.alamat}</span>
-                <span className="mt-0.5 block text-tinta-lembut">
+                <span className="mt-2 block text-tinta-lembut">
                   {site.kelurahan}, {site.kemantren}, {site.kota}
                 </span>
               </Baris>
@@ -201,7 +201,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
               )}
               {marketplace.length > 0 && (
                 <Baris label="Toko online">
-                  <span className="flex flex-wrap gap-x-4 gap-y-1">
+                  <span className="flex flex-wrap gap-x-4 gap-y-2">
                     {marketplace.map(([kunci, url]) => (
                       <a
                         key={kunci}
@@ -218,7 +218,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
               )}
               {(u.sosmed?.instagram || u.sosmed?.facebook) && (
                 <Baris label="Media sosial">
-                  <span className="flex flex-wrap gap-x-4 gap-y-1">
+                  <span className="flex flex-wrap gap-x-4 gap-y-2">
                     {u.sosmed?.instagram && (
                       <a
                         href={u.sosmed.instagram}
@@ -243,11 +243,11 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
                 </Baris>
               )}
               <Baris label="Titik lokasi">
-                <span className="flex flex-wrap gap-x-4 gap-y-1">
+                <span className="flex flex-wrap gap-x-4 gap-y-2">
                   {u.koordinat ? (
                     <Link
                       href="/peta"
-                      className="inline-flex items-center gap-1.5 font-semibold text-resmi underline underline-offset-4"
+                      className="inline-flex items-center gap-2 font-semibold text-resmi underline underline-offset-4"
                     >
                       <IkonPin className="h-4 w-4" />
                       Lihat di peta bidang
@@ -278,13 +278,13 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
               <table className="mt-4 w-full border-collapse text-left">
                 <thead>
                   <tr className="border-y-[1.5px] border-garis-tegas">
-                    <th scope="col" className="label-registri py-2.5 pr-3">
+                    <th scope="col" className="label-registri py-2 pr-4">
                       Produk
                     </th>
-                    <th scope="col" className="label-registri py-2.5 pr-3 text-right">
+                    <th scope="col" className="label-registri py-2 pr-4 text-right">
                       Harga
                     </th>
-                    <th scope="col" className="label-registri py-2.5">
+                    <th scope="col" className="label-registri py-2">
                       <span className="sr-only">Pesan</span>
                     </th>
                   </tr>
@@ -292,8 +292,8 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
                 <tbody>
                   {u.produk.map((p, i) => (
                     <tr key={`${p.nama}-${i}`} className="border-b-[1.5px] border-garis">
-                      <td className="py-4 pr-3 align-top">
-                        <span className="flex items-start gap-3">
+                      <td className="py-4 pr-4 align-top">
+                        <span className="flex items-start gap-4">
                           {p.foto && (
                             <span className="relative block h-12 w-12 shrink-0 overflow-hidden border-[1.5px] border-garis-tegas">
                               <Image
@@ -310,14 +310,14 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
                               {p.nama}
                             </span>
                             {p.keterangan && (
-                              <span className="mt-0.5 block text-sm text-tinta-lembut">
+                              <span className="mt-2 block text-sm text-tinta-lembut">
                                 {p.keterangan}
                               </span>
                             )}
                           </span>
                         </span>
                       </td>
-                      <td className="angka py-4 pr-3 text-right align-top font-semibold text-tinta">
+                      <td className="angka py-4 pr-4 text-right align-top font-semibold text-tinta">
                         {formatRupiah(p.harga)}
                         {p.satuan && typeof p.harga === "number" && (
                           <span className="block text-xs font-normal text-tinta-lembut">
@@ -354,7 +354,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
               <TombolWa
                 nomor={u.whatsapp}
                 pesan={pesanTanyaUmkm(u)}
-                className="mt-5"
+                className="mt-6"
               />
             </section>
           </div>
@@ -365,7 +365,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
             <h2 className="judul-registri text-xl text-tinta">
               Bidang lain di kategori {kat.nama}
             </h2>
-            <div className="lembar mt-5">
+            <div className="lembar mt-6">
               <ul className="[&>li:last-child]:border-b-0">
                 {serupa.map((x, i) => (
                   <BarisBidang key={x.slug} umkm={x} urutan={i} />
@@ -383,7 +383,7 @@ function Baris({ label, children }: { label: string; children: React.ReactNode }
   return (
     <div className="border-b-[1.5px] border-garis py-4">
       <dt className="label-registri">{label}</dt>
-      <dd className="mt-1.5 text-base text-tinta">{children}</dd>
+      <dd className="mt-2 text-base text-tinta">{children}</dd>
     </div>
   );
 }

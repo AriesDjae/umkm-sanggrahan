@@ -20,7 +20,7 @@ export default function Gambar() {
           width: "100%",
           height: "100%",
           display: "flex",
-          padding: 44,
+          padding: 48,
           background: "#f7f8fa",
           fontFamily: "sans-serif",
         }}
@@ -33,7 +33,7 @@ export default function Gambar() {
             justifyContent: "space-between",
             background: "#ffffff",
             border: "2px solid #878d96",
-            padding: "52px 60px",
+            padding: "56px 64px",
           }}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -42,8 +42,8 @@ export default function Gambar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: 58,
-                height: 58,
+                width: 56,
+                height: 56,
                 border: "2px solid #1b3b6f",
                 color: "#1b3b6f",
                 fontSize: 20,
@@ -58,7 +58,7 @@ export default function Gambar() {
                 color: "#4b5360",
                 fontSize: 26,
                 letterSpacing: 3,
-                marginLeft: 22,
+                marginLeft: 24,
               }}
             >
               {`USAHA WARGA · ${site.kelurahan.toUpperCase()} · ${site.kemantren.toUpperCase()}`}
@@ -92,15 +92,15 @@ export default function Gambar() {
               Sanggrahan
             </div>
             <div
-              style={{ display: "flex", color: "#4b5360", fontSize: 30, marginTop: 26 }}
+              style={{ display: "flex", color: "#4b5360", fontSize: 30, marginTop: 24 }}
             >
               Lihat yang bertanda buka hari ini, lalu hubungi pemiliknya langsung.
             </div>
           </div>
 
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ display: "flex", height: 4, width: 96, background: "#1b3b6f" }} />
-            <div style={{ display: "flex", color: "#4b5360", fontSize: 24, marginLeft: 20 }}>
+            <div style={{ display: "flex", height: 8, width: 96, background: "#1b3b6f" }} />
+            <div style={{ display: "flex", color: "#4b5360", fontSize: 24, marginLeft: 24 }}>
               {site.url.replace(/^https?:\/\//, "")}
             </div>
           </div>

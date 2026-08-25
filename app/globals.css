@@ -329,8 +329,8 @@ input[type="search"]::-webkit-search-cancel-button {
 .leaflet-container .leaflet-popup-content {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  margin: 0.75rem 0.9rem;
+  gap: 0.5rem;
+  margin: 1rem;
   min-width: 12rem;
   line-height: 1.45;
 }
@@ -365,7 +365,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .gelembung-tautan {
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   padding-top: 0.5rem;
   border-top: 1.5px solid var(--color-garis);
   font-size: 0.8125rem;

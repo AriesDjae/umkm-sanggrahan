@@ -22,8 +22,9 @@ pencari.
 | `npm run build` | Bangun versi produksi |
 
 Pemeriksaan satuan: `cek:tipe` (TypeScript), `lint` (aturan Next.js),
-`cek:kontras` (keterbacaan warna WCAG AA), `cek:halaman` (SEO & aksesibilitas
-HTML hasil build). Penjelasannya di **[docs/QC.md](docs/QC.md)**.
+`cek:kisi` (semua jarak kelipatan 8px), `cek:kontras` (keterbacaan warna WCAG
+AA), `cek:halaman` (SEO & aksesibilitas HTML hasil build). Penjelasannya di
+**[docs/QC.md](docs/QC.md)**.
 
 Untuk melihat hasil rancangan di berbagai ukuran layar:
 `node scripts/tangkap-layar.mjs` (memakai Chrome yang sudah terpasang; hasilnya
@@ -45,6 +46,9 @@ sistemnya: kategori dibedakan oleh kode huruf dan arsiran (bukan warna), dan
 keadaan buka/tutup dibedakan oleh bentuk petak (bukan warna). Akibatnya seluruh
 isinya tetap terbaca oleh pengunjung yang sulit membedakan warna maupun yang
 membaca di bawah matahari, dan usaha tanpa foto tetap tampil setara.
+
+Seluruh jarak dan ukuran berdiri di **kisi 8px** — 8, 16, 24, 32, 40, 48, 56,
+64 — tanpa langkah setengah. `npm run cek:kisi` menjaganya.
 
 Aturan sistemnya tercatat di **[DESIGN.md](DESIGN.md)**. Kebenaran produk —
 siapa penggunanya, apa batasannya, apa yang tidak boleh dikarang — di

@@ -44,8 +44,8 @@ export default function HalamanDaftar() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      <span className="stempel inline-block px-3 py-1.5 text-xs font-bold">GRATIS</span>
-      <h1 className="judul-registri mt-5 text-[clamp(2rem,1.5rem+2.2vw,3rem)] text-tinta">
+      <span className="stempel inline-block px-4 py-2 text-xs font-bold">GRATIS</span>
+      <h1 className="judul-registri mt-6 text-[clamp(2rem,1.5rem+2.2vw,3rem)] text-tinta">
         Daftarkan bidang usaha Anda
       </h1>
       <p
@@ -60,9 +60,9 @@ export default function HalamanDaftar() {
       {/* Langkah */}
       <section className="mt-12">
         <h2 className="judul-registri text-2xl text-tinta">Empat langkah</h2>
-        <ol className="mt-5 border-t-[1.5px] border-garis">
+        <ol className="mt-6 border-t-[1.5px] border-garis">
           {langkah.map((l, i) => (
-            <li key={l.judul} className="flex gap-5 border-b-[1.5px] border-garis py-5">
+            <li key={l.judul} className="flex gap-6 border-b-[1.5px] border-garis py-6">
               <span className="nomor-bidang shrink-0 text-base text-resmi">
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -71,7 +71,7 @@ export default function HalamanDaftar() {
                   {l.judul}
                 </span>
                 <span
-                  className="mt-1.5 block text-sm leading-relaxed text-tinta-lembut"
+                  className="mt-2 block text-sm leading-relaxed text-tinta-lembut"
                   style={{ maxWidth: "62ch" }}
                 >
                   {l.isi}
@@ -88,7 +88,7 @@ export default function HalamanDaftar() {
         <div className="mt-6 grid gap-8 sm:grid-cols-2">
           <div>
             <h3 className="label-registri">Wajib</h3>
-            <ul className="mt-3 border-t-[1.5px] border-garis text-sm text-tinta">
+            <ul className="mt-4 border-t-[1.5px] border-garis text-sm text-tinta">
               {[
                 "Nama usaha",
                 "Nama pemilik",
@@ -107,7 +107,7 @@ export default function HalamanDaftar() {
           </div>
           <div>
             <h3 className="label-registri">Kalau ada</h3>
-            <ul className="mt-3 border-t-[1.5px] border-garis text-sm text-tinta-lembut">
+            <ul className="mt-4 border-t-[1.5px] border-garis text-sm text-tinta-lembut">
               {[
                 "Jam buka",
                 "Titik lokasi di peta",
@@ -124,7 +124,7 @@ export default function HalamanDaftar() {
           </div>
         </div>
 
-        <p className="mt-7 text-sm text-tinta-lembut">
+        <p className="mt-8 text-sm text-tinta-lembut">
           Kategori yang tersedia: {KATEGORI.map((k) => `${k.nama} (${k.kode})`).join(", ")}.
         </p>
       </section>
@@ -132,7 +132,7 @@ export default function HalamanDaftar() {
       {/* Syarat */}
       <section className="mt-12">
         <h2 className="judul-registri text-2xl text-tinta">Syarat ikut tercatat</h2>
-        <ul className="mt-5 border-t-[1.5px] border-garis">
+        <ul className="mt-6 border-t-[1.5px] border-garis">
           {syarat.map((s) => (
             <li
               key={s}
@@ -145,7 +145,7 @@ export default function HalamanDaftar() {
         </ul>
 
         <div
-          className="mt-7 border-l-[3px] p-5 text-sm leading-relaxed"
+          className="mt-8 border-l-[3px] p-6 text-sm leading-relaxed"
           style={{
             borderColor: "var(--color-stempel)",
             backgroundColor: "var(--color-lembar-alt)",
@@ -167,7 +167,7 @@ export default function HalamanDaftar() {
       {/* Ajakan */}
       <section className="lembar mt-12 p-8 text-center sm:p-10">
         <h2 className="judul-registri text-2xl text-tinta">Siap mendaftar?</h2>
-        <p className="mx-auto mt-3 max-w-md leading-relaxed text-tinta-lembut">
+        <p className="mx-auto mt-4 max-w-md leading-relaxed text-tinta-lembut">
           Kirim pesan ke pengurus lewat WhatsApp. Anda akan dipandu langkah demi
           langkah.
         </p>
@@ -175,7 +175,7 @@ export default function HalamanDaftar() {
           href={waPengurus}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-7 inline-flex rounded-[2px] border-[1.5px] px-6 py-3.5 text-base font-semibold"
+          className="mt-8 inline-flex rounded-[2px] border-[1.5px] px-6 py-4 text-base font-semibold"
           style={{
             backgroundColor: "var(--color-resmi)",
             borderColor: "var(--color-resmi-tua)",

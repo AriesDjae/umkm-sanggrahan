@@ -24,8 +24,8 @@ export default function Header() {
       className="sticky top-0 z-50 border-b-[1.5px] border-garis"
       style={{ backgroundColor: "var(--color-putih)" }}
     >
-      <div className="mx-auto flex max-w-[80rem] items-center gap-4 px-4 py-3">
-        <Link href="/" className="flex items-center gap-3" onClick={() => setBuka(false)}>
+      <div className="mx-auto flex max-w-[80rem] items-center gap-4 px-4 py-4">
+        <Link href="/" className="flex items-center gap-4" onClick={() => setBuka(false)}>
           {site.logo ? (
             <Image
               src={site.logo}
@@ -50,13 +50,13 @@ export default function Header() {
             <span className="judul-registri block text-lg text-tinta sm:text-xl">
               {site.nama}
             </span>
-            <span className="label-registri mt-0.5 block">
+            <span className="label-registri mt-2 block">
               {site.kelurahan} · {site.kemantren} · RW 1 &amp; 3
             </span>
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-1 md:flex">
+        <nav className="ml-auto hidden items-center gap-2 md:flex">
           {menu.map((m) => {
             const aktif = m.href === "/" ? path === "/" : path.startsWith(m.href);
             return (
@@ -64,7 +64,7 @@ export default function Header() {
                 key={m.href}
                 href={m.href}
                 aria-current={aktif ? "page" : undefined}
-                className="rounded-[2px] px-3 py-2 text-sm font-semibold transition-colors"
+                className="rounded-[2px] px-4 py-2 text-sm font-semibold transition-colors"
                 style={
                   aktif
                     ? {
@@ -83,11 +83,11 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setBuka((v) => !v)}
-          className="ml-auto grid h-11 w-11 place-items-center rounded-[2px] border-[1.5px] border-garis-tegas text-tinta md:hidden"
+          className="ml-auto grid h-12 w-12 place-items-center rounded-[2px] border-[1.5px] border-garis-tegas text-tinta md:hidden"
           aria-label={buka ? "Tutup menu" : "Buka menu"}
           aria-expanded={buka}
         >
-          {buka ? <IkonSilang className="h-5 w-5" /> : <IkonGaris className="h-5 w-5" />}
+          {buka ? <IkonSilang className="h-6 w-6" /> : <IkonGaris className="h-6 w-6" />}
         </button>
       </div>
 
@@ -105,7 +105,7 @@ export default function Header() {
                   href={m.href}
                   onClick={() => setBuka(false)}
                   aria-current={aktif ? "page" : undefined}
-                  className="border-b-[1.5px] border-garis px-2 py-3.5 text-base font-semibold last:border-b-0"
+                  className="border-b-[1.5px] border-garis px-2 py-4 text-base font-semibold last:border-b-0"
                   style={{
                     color: aktif ? "var(--color-resmi)" : "var(--color-tinta)",
                   }}

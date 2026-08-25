@@ -233,8 +233,31 @@ Baris bidang memakai grid empat kolom pada sm ke atas —
 `[7.5rem auto 1fr auto]`: nomor, kode kategori, isi, petak foto. Di bawah sm
 kolomnya runtuh jadi dua dan isinya turun ke baris berikutnya.
 
-Ritme jarak: 20px padding baris, 24px antar lembar, 56px antar bagian. Jarak di
-atas sebuah judul selalu lebih besar daripada di bawahnya.
+### Kisi 8px
+
+**Setiap jarak dan ukuran adalah kelipatan 8.** Tangganya: 8, 16, 24, 32, 40,
+48, 56, 64, 80, 96. Tidak ada langkah setengah — 4px, 12px, dan 20px tidak
+dipakai. Satu tangga yang dipatuhi membuat jarak antar unsur bisa dibandingkan
+dengan mata, dan membuat nilai yang meleset langsung kelihatan alih-alih
+bersembunyi sebagai "kira-kira segitu". Pada lembar yang isinya justru
+garis dan kolom, ketidakrapian sebesar 2px terbaca sebagai cetakan yang miring.
+
+Ritme yang dipakai: **16px** padding sisi baris dan kop, **24px** padding tegak
+baris dan jarak antar lembar, **40px** padding tegak halaman, **56–64px** antar
+bagian, **96px** sebelum kaki halaman. Jarak di atas sebuah judul selalu lebih
+besar daripada di bawahnya.
+
+Ukuran sasaran sentuh ikut kisi yang sama: tombol menu 48×48, kotak kode
+kategori 32×32 (40×40 pada ukuran besar), ikon 16px atau 24px.
+
+Yang **tidak** tunduk pada kisi, karena bukan jarak: tebal garis (1.5px, dan
+3px ganda pada kop), bayangan, cincin fokus, sudut 2px, tangga ukuran huruf,
+tinggi baris, jarak antar huruf, dan pola arsiran kategori. Ukuran relatif
+layar (`62vh` pada peta penuh) juga di luar kisi — ia mengikuti tinggi jendela,
+bukan tangga jarak.
+
+`npm run cek:kisi` memeriksanya di seluruh `app/` dan `components/`, dan ikut
+dijalankan `npm run qc`.
 
 Halaman peta memakai `[1fr 24rem]` pada lg; petanya `62vh` dengan lantai
 `26rem`, dan daftar di sampingnya bergulir sendiri dengan tinggi maksimum sama.

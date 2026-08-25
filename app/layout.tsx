@@ -84,7 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div hidden dangerouslySetInnerHTML={{ __html: `<!--${KONTRAK}-->` }} />
         <a
           href="#isi"
-          className="sr-only font-semibold focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-[2px] focus:bg-[var(--color-resmi)] focus:px-4 focus:py-3 focus:text-[var(--color-putih)]"
+          className="sr-only font-semibold focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-[2px] focus:bg-[var(--color-resmi)] focus:px-4 focus:py-4 focus:text-[var(--color-putih)]"
         >
           Lompat ke isi
         </a>

@@ -82,17 +82,17 @@ function buatPenanda(u: Titik, terpilih: boolean): L.DivIcon {
         ">
           <span style="
             display:grid;place-items:center;
-            width:20px;height:20px;
+            width:24px;height:24px;
             font-weight:700;font-size:11px;
             border-right:1.5px solid ${garis};
           ">${kat.kode}</span>
           <span style="
-            padding:0 6px;line-height:20px;white-space:nowrap;
+            padding:0 8px;line-height:24px;white-space:nowrap;
             font-size:11px;font-weight:600;
             font-variant-numeric:tabular-nums;letter-spacing:.05em;
           ">${u.nomor ?? ""}</span>
         </div>
-        <div style="width:1.5px;height:10px;background:${garis};"></div>
+        <div style="width:1.5px;height:8px;background:${garis};"></div>
       </div>`,
     iconSize: [0, 0],
     iconAnchor: [0, 32],
@@ -200,7 +200,7 @@ export default function PetaUmkm({
         // Penandanya sengaja tidak ikut ditandai terpilih: menandainya menyusun
         // ulang seluruh penanda, dan gelembung yang baru dibuka ikut terbuang
         // bersama penanda lamanya.
-        p.bindPopup(isiGelembung(u), { closeButton: false, offset: [0, -30] });
+        p.bindPopup(isiGelembung(u), { closeButton: false, offset: [0, -32] });
       } else {
         p.on("click", () => setTerpilih(u.slug));
       }
@@ -214,7 +214,7 @@ export default function PetaUmkm({
           (u) => [u.koordinat.lat, u.koordinat.lng] as [number, number],
         ),
       );
-      m.fitBounds(batas, { padding: [60, 60], maxZoom: 17 });
+      m.fitBounds(batas, { padding: [64, 64], maxZoom: 17 });
     }
   }, [tersaring, terpilih, ringkas]);
 
@@ -228,13 +228,13 @@ export default function PetaUmkm({
       icon: L.divIcon({
         className: "penanda-saya",
         html: `<div style="
-          width:18px;height:18px;border-radius:50%;
+          width:16px;height:16px;border-radius:50%;
           background:var(--color-resmi);
           border:3px solid #fff;
           box-shadow:0 0 0 2px var(--color-resmi), 0 1px 3px rgba(20,23,28,.3);
         "></div>`,
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
       }),
       title: "Posisi Anda",
     }).addTo(m);
@@ -270,12 +270,12 @@ export default function PetaUmkm({
     <div className={ringkas ? "" : "grid gap-6 lg:grid-cols-[1fr_24rem]"}>
       {/* ---- Peta ---- */}
       <div className="lembar overflow-hidden">
-        <div className="kop flex flex-wrap items-center gap-2 px-3 py-3">
+        <div className="kop flex flex-wrap items-center gap-2 px-4 py-4">
           <button
             type="button"
             onClick={() => setHanyaBuka((v) => !v)}
             aria-pressed={hanyaBuka}
-            className="rounded-[2px] border-[1.5px] px-3 py-1.5 text-sm font-semibold"
+            className="rounded-[2px] border-[1.5px] px-4 py-2 text-sm font-semibold"
             style={{
               borderColor: hanyaBuka
                 ? "var(--color-buka)"
@@ -313,7 +313,7 @@ export default function PetaUmkm({
           <button
             type="button"
             onClick={cariSaya}
-            className="ml-auto inline-flex items-center gap-1.5 rounded-[2px] border-[1.5px] px-3 py-1.5 text-sm font-semibold"
+            className="ml-auto inline-flex items-center gap-2 rounded-[2px] border-[1.5px] px-4 py-2 text-sm font-semibold"
             style={{
               borderColor: "var(--color-resmi)",
               color: "var(--color-resmi)",
@@ -325,7 +325,7 @@ export default function PetaUmkm({
         </div>
 
         {(statusLokasi === "ditolak" || statusLokasi === "gagal") && (
-          <p className="border-b-[1.5px] border-garis px-3 py-2 text-xs font-semibold text-stempel">
+          <p className="border-b-[1.5px] border-garis px-4 py-2 text-xs font-semibold text-stempel">
             {statusLokasi === "ditolak"
               ? "Izin lokasi ditolak. Nyalakan izin lokasi di peramban kalau ingin urutan berdasarkan jarak."
               : "Lokasi tidak bisa dibaca. Peta tetap bisa dipakai seperti biasa."}
@@ -352,14 +352,14 @@ export default function PetaUmkm({
             {posisiSaya ? " · diurutkan dari yang terdekat" : ""}
           </p>
 
-          <ul className="mt-3 max-h-[62vh] overflow-y-auto border-t-[1.5px] border-garis">
+          <ul className="mt-4 max-h-[62vh] overflow-y-auto border-t-[1.5px] border-garis">
             {berurut.map((u) => {
               const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
               const aktif = u.slug === terpilih;
               return (
                 <li key={u.slug} className="border-b-[1.5px] border-garis">
                   <div
-                    className="px-2 py-3 transition-colors"
+                    className="px-2 py-4 transition-colors"
                     style={{
                       backgroundColor: aktif
                         ? "var(--color-resmi-muda)"
@@ -382,13 +382,13 @@ export default function PetaUmkm({
                           </span>
                         )}
                       </span>
-                      <span className="mt-1 flex items-center gap-2.5">
+                      <span className="mt-2 flex items-center gap-2">
                         <KodeBidang kategori={kat} />
                         <span className="judul-registri truncate text-base text-tinta">
                           {u.nama}
                         </span>
                       </span>
-                      <span className="mt-1 block text-xs text-tinta-lembut">
+                      <span className="mt-2 block text-xs text-tinta-lembut">
                         {u.alamat} · {rentangHarga(u)}
                       </span>
                     </button>
@@ -397,10 +397,10 @@ export default function PetaUmkm({
                       <TandaBuka jam={u.jam} />
                       <Link
                         href={`/umkm/${u.slug}`}
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-resmi underline underline-offset-4"
+                        className="inline-flex items-center gap-2 text-xs font-semibold text-resmi underline underline-offset-4"
                       >
                         Buka lembar
-                        <IkonPanah className="h-3 w-3" />
+                        <IkonPanah className="h-4 w-4" />
                       </Link>
                     </span>
                   </div>

@@ -72,7 +72,7 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
       {/* ---- Kunci keterangan: menempel, tidak pernah ikut tergulir ---- */}
       <aside className="lg:sticky lg:top-28 lg:self-start">
         <h2 className="label-registri">Kunci kategori</h2>
-        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 lg:flex-col lg:gap-1">
+        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2 lg:flex-col lg:gap-2">
           {kategoriTersedia.map((k) => {
             const aktif = kategori === k.nama;
             return (
@@ -81,7 +81,7 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
                   type="button"
                   onClick={() => setKategori(aktif ? "semua" : k.nama)}
                   aria-pressed={aktif}
-                  className="flex w-full items-center gap-2.5 rounded-[2px] px-2 py-1.5 text-left text-sm transition-colors"
+                  className="flex w-full items-center gap-2 rounded-[2px] px-2 py-2 text-left text-sm transition-colors"
                   style={{
                     backgroundColor: aktif ? "var(--color-resmi-muda)" : "transparent",
                     color: aktif ? "var(--color-resmi)" : "var(--color-tinta)",
@@ -98,8 +98,8 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
 
         {rwTersedia.length > 1 && (
           <>
-            <h2 className="label-registri mt-7">Wilayah</h2>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <h2 className="label-registri mt-8">Wilayah</h2>
+            <div className="mt-4 flex flex-wrap gap-2">
               {rwTersedia.map((r) => {
                 const aktif = rw === String(r);
                 return (
@@ -108,7 +108,7 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
                     type="button"
                     onClick={() => setRw(aktif ? "semua" : String(r))}
                     aria-pressed={aktif}
-                    className="rounded-[2px] border-[1.5px] px-3 py-1.5 text-sm font-semibold"
+                    className="rounded-[2px] border-[1.5px] px-4 py-2 text-sm font-semibold"
                     style={{
                       borderColor: aktif
                         ? "var(--color-resmi)"
@@ -128,28 +128,28 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
 
       {/* ---- Lembar registri ---- */}
       <div className="lembar">
-        <div className="kop px-3 py-4 sm:px-4">
+        <div className="kop px-4 py-4">
           <label htmlFor="cari" className="sr-only">
             Cari bidang usaha
           </label>
           <div className="relative">
-            <IkonCari className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-tinta-lembut" />
+            <IkonCari className="pointer-events-none absolute top-1/2 left-4 h-6 w-6 -translate-y-1/2 text-tinta-lembut" />
             <input
               id="cari"
               type="search"
               value={kata}
               onChange={(e) => setKata(e.target.value)}
               placeholder="Cari nama usaha, produk, atau nomor bidang…"
-              className="w-full rounded-[2px] border-[1.5px] border-garis-tegas bg-lembar py-3 pr-3 pl-11 text-base text-tinta placeholder:text-tinta-lembut"
+              className="w-full rounded-[2px] border-[1.5px] border-garis-tegas bg-lembar py-4 pr-4 pl-12 text-base text-tinta placeholder:text-tinta-lembut"
             />
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-3">
+          <div className="mt-4 flex flex-wrap items-center gap-4">
             <button
               type="button"
               onClick={() => setHanyaBuka((v) => !v)}
               aria-pressed={hanyaBuka}
-              className="inline-flex items-center gap-2 rounded-[2px] border-[1.5px] px-3 py-2 text-sm font-semibold"
+              className="inline-flex items-center gap-2 rounded-[2px] border-[1.5px] px-4 py-2 text-sm font-semibold"
               style={{
                 borderColor: hanyaBuka ? "var(--color-buka)" : "var(--color-garis-tegas)",
                 backgroundColor: hanyaBuka ? "var(--color-buka)" : "transparent",
@@ -171,7 +171,7 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
                   setRw("semua");
                   setHanyaBuka(false);
                 }}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-tinta-lembut underline underline-offset-4"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-tinta-lembut underline underline-offset-4"
               >
                 <IkonSilang className="h-4 w-4" />
                 Atur ulang
@@ -182,7 +182,7 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
 
         {/* Pita keadaan: satu kendali merambat ke seluruh lembar */}
         <div
-          className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b-[1.5px] border-garis px-3 py-2.5 sm:px-4"
+          className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-b-[1.5px] border-garis px-4 py-2"
           style={{
             backgroundColor: adaFilter ? "var(--color-resmi-muda)" : "var(--color-lembar)",
           }}
@@ -215,7 +215,7 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
             <p className="judul-registri text-xl text-tinta">
               Tidak ada bidang yang cocok
             </p>
-            <p className="mx-auto mt-3 max-w-sm text-sm text-tinta-lembut">
+            <p className="mx-auto mt-4 max-w-sm text-sm text-tinta-lembut">
               {hanyaBuka
                 ? "Tidak ada usaha yang sedang buka dengan saringan ini. Coba matikan “Hanya yang buka sekarang”."
                 : "Coba kata kunci lain, atau atur ulang penyaringnya."}

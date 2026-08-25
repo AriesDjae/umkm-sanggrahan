@@ -22,7 +22,7 @@ export default function HalamanPeta() {
           Peta bidang
         </h1>
         <p
-          className="mt-3 text-base leading-relaxed text-tinta-lembut"
+          className="mt-4 text-base leading-relaxed text-tinta-lembut"
           style={{ maxWidth: "64ch" }}
         >
           Letak bidang usaha di {site.kampung}, {site.kelurahan}, {site.kemantren}.

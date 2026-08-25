@@ -31,7 +31,7 @@ export default function BarisBidang({
     >
       <Link
         href={`/umkm/${umkm.slug}`}
-        className="group grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 px-3 py-5 sm:grid-cols-[7.5rem_auto_1fr_auto] sm:items-baseline sm:px-4"
+        className="group grid grid-cols-[auto_1fr] gap-x-4 gap-y-4 px-4 py-6 sm:grid-cols-[7.5rem_auto_1fr_auto] sm:items-baseline"
       >
         {/* Kolom nomor bidang */}
         <span className="nomor-bidang col-start-1 row-start-1 text-xs text-tinta-lembut sm:text-sm">
@@ -49,7 +49,7 @@ export default function BarisBidang({
             {umkm.nama}
           </span>
 
-          <span className="mt-1.5 block text-sm text-tinta-lembut">
+          <span className="mt-2 block text-sm text-tinta-lembut">
             {umkm.alamat} · RW {umkm.rw}
             {umkm.rt ? ` / RT ${umkm.rt}` : ""}
           </span>
@@ -61,7 +61,7 @@ export default function BarisBidang({
               .join(" · ")}
           </span>
 
-          <span className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="angka text-sm font-semibold text-tinta">
               {rentangHarga(umkm)}
             </span>

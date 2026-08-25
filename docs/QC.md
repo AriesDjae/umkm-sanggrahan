@@ -1,6 +1,6 @@
 # Pemeriksaan Mutu (QC)
 
-Web ini punya enam pemeriksaan otomatis. Semuanya bisa dijalankan sekaligus:
+Web ini punya tujuh pemeriksaan otomatis. Semuanya bisa dijalankan sekaligus:
 
 ```
 npm run qc
@@ -17,6 +17,7 @@ berarti semuanya lolos.
 |---|---|---|
 | `npm run cek:tipe` | Kecocokan tipe data di seluruh kode TypeScript | Ada kode yang berpotensi error saat dijalankan |
 | `npm run lint` | Gaya penulisan dan pola berbahaya menurut aturan Next.js | Ada kode yang perlu dirapikan |
+| `npm run cek:kisi` | Semua jarak dan ukuran jatuh di kelipatan 8px | Ada jarak yang meleset dari kisi |
 | `npm run cek:kontras` | Keterbacaan 23 pasangan warna dan garis menurut standar WCAG AA | Ada teks atau garis yang sulit dibaca |
 | `npm run build` | Seluruh halaman berhasil dibangun jadi HTML statis | Ada halaman yang error saat dibangun |
 | `npm run cek:halaman` | Mutu HTML hasil build: judul, deskripsi, heading, gambar, tautan | Ada masalah SEO atau aksesibilitas |
@@ -40,6 +41,29 @@ memastikan teksnya masih terbaca. Daftar pasangan warna yang diuji ada di
 `scripts/cek-kontras.mjs` — tambahkan pasangan baru di sana kalau ada kombinasi
 warna baru.
 
+## Yang diperiksa `cek:kisi`
+
+Setiap jarak dan ukuran di `app/` dan `components/` harus kelipatan 8px —
+aturannya beserta alasannya ada di bagian **Kisi 8px** di [DESIGN.md](../DESIGN.md).
+
+Dua hal yang dibaca:
+
+- **utilitas jarak Tailwind** (`p-`, `mt-`, `gap-`, `h-`, `w-`, dan kerabatnya).
+  Tailwind memakai 4px per langkah, jadi hanya langkah genap yang lolos —
+  `px-3` (12px) ditolak, `px-4` (16px) diterima.
+- **nilai px yang ditulis tangan** di berkas `.tsx` dan `.css`, termasuk yang
+  ada di dalam `style` sebaris.
+
+Yang dilewati karena bukan jarak: tebal garis (1px, 1.5px, 2px, 3px), bayangan,
+cincin fokus, sudut, ukuran huruf, tinggi baris, jarak antar huruf, pola arsiran
+kategori, dan komentar. Kalau ada pengecualian baru, catat alasannya di DESIGN.md
+lalu tambahkan ke daftar kecuali di `scripts/cek-kisi.mjs` — jangan dibiarkan
+merah begitu saja.
+
+Satu tempat di luar jangkauannya: `app/opengraph-image.tsx` menulis jarak sebagai
+angka telanjang (`padding: 48`), bukan untaian `"48px"`, karena mesin penggambarnya
+menuntut begitu. Aturan kisinya tetap berlaku di sana, hanya penjagaannya dengan mata.
+
 ## Yang diperiksa `cek:halaman`
 
 Untuk setiap halaman hasil build:
@@ -58,12 +82,13 @@ Untuk setiap halaman hasil build:
 
 ## Hasil terakhir
 
-Dijalankan 24 Agustus 2026, sesudah perombakan desain kedua (Registri Bidang),
+Dijalankan 25 Agustus 2026, sesudah penarikan seluruh jarak ke kisi 8px,
 dengan 5 data contoh:
 
 ```
 cek:tipe      ✓ lolos
 lint          ✓ lolos, tanpa peringatan
+cek:kisi      ✓ semua jarak jatuh di kelipatan 8
 cek:kontras   ✓ 23 dari 23 pasangan warna lolos WCAG AA
 build         ✓ 23 halaman dibangun jadi statis
 cek:halaman   ✓ 16 halaman lolos, tanpa peringatan
@@ -75,7 +100,7 @@ belum diganti data asli, pemeriksaan akan terus gagal supaya nomor WhatsApp
 palsu tidak ikut terpublikasi. Begitu kelima berkas contoh di `data/umkm/`
 diganti data sungguhan, pemeriksaan ini ikut hijau.
 
-Selain keenam pemeriksaan itu, perombakan desain juga melewati:
+Selain ketujuh pemeriksaan itu, perombakan desain juga melewati:
 
 - `node .claude/skills/impeccable/scripts/detect.mjs` — detektor pola desain
   bawaan skill impeccable: **bersih, tanpa temuan**.

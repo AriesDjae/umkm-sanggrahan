@@ -58,7 +58,7 @@ export default async function HalamanKategori({
         <span className="font-semibold text-tinta">{kat.nama}</span>
       </nav>
 
-      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 border-b-[3px] border-double border-garis-tegas pb-7">
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 border-b-[3px] border-double border-garis-tegas pb-8">
         <KodeBidang kategori={kat} ukuran="besar" />
         <div className="min-w-0 flex-1">
           <h1 className="judul-registri text-[clamp(1.9rem,1.4rem+2.4vw,3rem)] text-tinta">
@@ -92,7 +92,7 @@ export default async function HalamanKategori({
           <p className="judul-registri text-xl text-tinta">
             Belum ada bidang di kategori ini
           </p>
-          <p className="mx-auto mt-3 max-w-md text-sm text-tinta-lembut">
+          <p className="mx-auto mt-4 max-w-md text-sm text-tinta-lembut">
             Punya usaha {kat.nama.toLowerCase()} di RW 1 atau RW 3?{" "}
             <Link
               href="/daftar"
@@ -105,14 +105,14 @@ export default async function HalamanKategori({
         </div>
       )}
 
-      <section className="mt-14 border-t-[1.5px] border-garis pt-7">
+      <section className="mt-14 border-t-[1.5px] border-garis pt-8">
         <h2 className="label-registri">Kategori lainnya</h2>
-        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-4">
           {lainnya.map((k) => (
             <li key={k.slug}>
               <Link
                 href={`/kategori/${k.slug}`}
-                className="flex items-center gap-2.5 text-sm font-medium text-tinta hover:text-resmi hover:underline hover:underline-offset-4"
+                className="flex items-center gap-2 text-sm font-medium text-tinta hover:text-resmi hover:underline hover:underline-offset-4"
               >
                 <KodeBidang kategori={k} />
                 {k.nama}

@@ -29,12 +29,12 @@ export default function Footer() {
           <h2 id="kaki-kategori" className="label-registri">
             Kunci kategori
           </h2>
-          <ul className="mt-4 flex flex-col gap-1">
+          <ul className="mt-4 flex flex-col gap-2">
             {KATEGORI.map((k) => (
               <li key={k.slug}>
                 <Link
                   href={`/kategori/${k.slug}`}
-                  className="flex items-center gap-2.5 py-1.5 text-sm text-tinta hover:text-resmi hover:underline hover:underline-offset-4"
+                  className="flex items-center gap-2 py-2 text-sm text-tinta hover:text-resmi hover:underline hover:underline-offset-4"
                 >
                   <KodeBidang kategori={k} />
                   {k.nama}
@@ -54,7 +54,7 @@ export default function Footer() {
             href={tautanWa(site.kontakPengurus.whatsapp, ajakan)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-flex rounded-[2px] border-[1.5px] px-4 py-2.5 text-sm font-semibold"
+            className="mt-6 inline-flex rounded-[2px] border-[1.5px] px-4 py-2 text-sm font-semibold"
             style={{
               borderColor: "var(--color-resmi)",
               color: "var(--color-resmi)",

@@ -12,10 +12,10 @@ export default function TidakDitemukan() {
           Alamat yang Anda buka tidak tercatat, atau bidang itu sudah diturunkan
           atas permintaan pemiliknya.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap gap-4">
           <Link
             href="/umkm"
-            className="rounded-[2px] border-[1.5px] px-5 py-3 font-semibold"
+            className="rounded-[2px] border-[1.5px] px-6 py-4 font-semibold"
             style={{
               backgroundColor: "var(--color-resmi)",
               borderColor: "var(--color-resmi-tua)",
@@ -26,7 +26,7 @@ export default function TidakDitemukan() {
           </Link>
           <Link
             href="/"
-            className="rounded-[2px] border-[1.5px] border-garis-tegas px-5 py-3 font-semibold text-tinta"
+            className="rounded-[2px] border-[1.5px] border-garis-tegas px-6 py-4 font-semibold text-tinta"
           >
             Kembali ke depan
           </Link>

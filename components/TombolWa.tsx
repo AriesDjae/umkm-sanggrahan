@@ -28,8 +28,8 @@ export default function TombolWa({
       href={tautanWa(nomor, pesan)}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2.5 rounded-[2px] border-[1.5px] font-semibold transition-colors duration-150 ${
-        besar ? "px-6 py-3.5 text-base" : "px-3 py-2 text-sm"
+      className={`inline-flex items-center justify-center gap-2 rounded-[2px] border-[1.5px] font-semibold transition-colors duration-150 ${
+        besar ? "px-6 py-4 text-base" : "px-4 py-2 text-sm"
       } ${className}`}
       style={{
         backgroundColor: "var(--color-resmi)",
@@ -37,7 +37,7 @@ export default function TombolWa({
         color: "var(--color-putih)",
       }}
     >
-      <IkonWa className={besar ? "h-5 w-5" : "h-4 w-4"} />
+      <IkonWa className={besar ? "h-6 w-6" : "h-4 w-4"} />
       {children}
     </a>
   );
