@@ -267,9 +267,15 @@ export default function PetaUmkm({
   }, []);
 
   return (
-    <div className={ringkas ? "" : "grid gap-6 lg:grid-cols-[1fr_24rem]"}>
+    <div
+      className={
+        ringkas
+          ? ""
+          : "grid gap-6 lg:h-[62vh] lg:min-h-[26rem] lg:grid-cols-[1fr_24rem]"
+      }
+    >
       {/* ---- Peta ---- */}
-      <div className="lembar overflow-hidden">
+      <div className="lembar flex min-h-0 flex-col overflow-hidden">
         <div className="kop flex flex-wrap items-center gap-2 px-4 py-4">
           <button
             type="button"
@@ -337,7 +343,7 @@ export default function PetaUmkm({
           className={
             ringkas
               ? "h-[22rem] w-full sm:h-[27rem]"
-              : "h-[62vh] min-h-[26rem] w-full"
+              : "h-[26rem] w-full flex-1 lg:h-auto"
           }
           role="application"
           aria-label="Peta letak bidang usaha Sanggrahan"
@@ -346,20 +352,22 @@ export default function PetaUmkm({
 
       {/* ---- Daftar bidang ---- */}
       {!ringkas && (
-        <div>
-          <p className="label-registri">
-            {berurut.length} bidang di peta
-            {posisiSaya ? " · diurutkan dari yang terdekat" : ""}
-          </p>
+        <div className="lembar flex min-h-0 flex-col overflow-hidden">
+          <div className="kop px-4 py-4">
+            <p className="label-registri">
+              {berurut.length} bidang di peta
+              {posisiSaya ? " · diurutkan dari yang terdekat" : ""}
+            </p>
+          </div>
 
-          <ul className="mt-4 max-h-[62vh] overflow-y-auto border-t-[1.5px] border-garis">
+          <ul className="max-h-[26rem] flex-1 overflow-y-auto lg:max-h-none [&>li:last-child]:border-b-0">
             {berurut.map((u) => {
               const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
               const aktif = u.slug === terpilih;
               return (
                 <li key={u.slug} className="border-b-[1.5px] border-garis">
                   <div
-                    className="px-2 py-4 transition-colors"
+                    className="px-4 py-4 transition-colors"
                     style={{
                       backgroundColor: aktif
                         ? "var(--color-resmi-muda)"
@@ -410,7 +418,7 @@ export default function PetaUmkm({
           </ul>
 
           {berurut.length === 0 && (
-            <p className="border-b-[1.5px] border-garis px-4 py-10 text-center text-sm text-tinta-lembut">
+            <p className="px-4 py-10 text-center text-sm text-tinta-lembut">
               Tidak ada bidang yang cocok dengan saringan ini.
             </p>
           )}

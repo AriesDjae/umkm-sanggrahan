@@ -18,7 +18,7 @@ export default function Beranda() {
   return (
     <>
       {/* ---- Kop registri ---- */}
-      <section className="mx-auto max-w-[80rem] px-4 pt-10 pb-8">
+      <section className="mx-auto max-w-[80rem] px-4 pt-10 pb-16">
         <h1 className="judul-registri max-w-[18ch] text-[clamp(2.4rem,1.6rem+3.6vw,4.2rem)] text-tinta">
           Registri usaha warga Sanggrahan
         </h1>
@@ -80,7 +80,7 @@ export default function Beranda() {
       </section>
 
       {/* ---- Profil singkat & letak bidang ---- */}
-      <section className="mx-auto max-w-[80rem] px-4 pb-14">
+      <section className="mx-auto max-w-[80rem] px-4 pb-16">
         <div className="grid items-start gap-6 lg:grid-cols-[23rem_1fr]">
           {/* Blok identitas wilayah, dibaca seperti kepala berkas resmi. */}
           <div className="lembar">
@@ -101,6 +101,12 @@ export default function Beranda() {
                 RT.
               </p>
 
+              {/*
+                Label berkolom tetap, nilainya rata kiri tepat sesudahnya.
+                Bukan label-kiri-nilai-kanan: begitu lembarnya melebar — dan di
+                bawah lg ia selebar halaman — keduanya terlempar ke ujung yang
+                berjauhan dan berhenti terbaca sebagai sepasang.
+              */}
               <dl className="mt-6 border-t-[1.5px] border-garis">
                 {[
                   { label: "Kampung", nilai: "Sanggrahan" },
@@ -113,7 +119,7 @@ export default function Beranda() {
                 ].map((b) => (
                   <div
                     key={b.label}
-                    className="flex items-baseline justify-between gap-4 border-b-[1.5px] border-garis py-2"
+                    className="grid grid-cols-[8rem_1fr] items-baseline gap-4 border-b-[1.5px] border-garis py-2"
                   >
                     <dt className="label-registri">{b.label}</dt>
                     <dd className="text-sm font-semibold text-tinta">
@@ -200,7 +206,7 @@ export default function Beranda() {
 
       {/* ---- Indeks kategori ---- */}
       <section
-        className="border-y-[1.5px] border-garis py-14"
+        className="border-y-[1.5px] border-garis py-16"
         style={{ backgroundColor: "var(--color-putih)" }}
       >
         <div className="mx-auto max-w-[80rem] px-4">

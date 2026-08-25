@@ -50,6 +50,10 @@ membaca di bawah matahari, dan usaha tanpa foto tetap tampil setara.
 Seluruh jarak dan ukuran berdiri di **kisi 8px** — 8, 16, 24, 32, 40, 48, 56,
 64 — tanpa langkah setengah. `npm run cek:kisi` menjaganya.
 
+Susunan berkolom berganti di satu titik untuk seluruh situs, `lg` (1024px), dan
+lebar halaman ditetapkan di satu tempat saja — `components/Halaman.tsx` —
+sehingga tepi kiri isi selalu sejajar dengan kop dan kaki halaman.
+
 Aturan sistemnya tercatat di **[DESIGN.md](DESIGN.md)**. Kebenaran produk —
 siapa penggunanya, apa batasannya, apa yang tidak boleh dikarang — di
 **[PRODUCT.md](PRODUCT.md)**.
@@ -67,6 +71,7 @@ app/                     Halaman web
   opengraph-image.tsx      Gambar pratinjau saat tautan dibagikan
 
 components/
+  Halaman.tsx              Wadah halaman: lebar, padding, dan ukuran baris baca
   BarisBidang.tsx          Satu UMKM sebagai satu baris registri bernomor
   KodeBidang.tsx           Kode huruf + arsiran kategori, pengganti warna
   TandaBuka.tsx            Tanda BUKA/TUTUP; bentuk petaknya yang menanggung arti

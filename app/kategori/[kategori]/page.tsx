@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import BarisBidang from "@/components/BarisBidang";
 import KodeBidang from "@/components/KodeBidang";
+import Halaman from "@/components/Halaman";
 import { KATEGORI, cariKategori } from "@/lib/kategori";
 import { umkmByKategori } from "@/lib/umkm";
 import { site } from "@/lib/site";
@@ -41,7 +42,7 @@ export default async function HalamanKategori({
   const lainnya = KATEGORI.filter((k) => k.slug !== kat.slug);
 
   return (
-    <div className="mx-auto max-w-[80rem] px-4 py-8">
+    <Halaman>
       <nav aria-label="Jejak halaman" className="text-sm text-tinta-lembut">
         <Link href="/" className="underline-offset-4 hover:underline">
           Registri
@@ -121,6 +122,6 @@ export default async function HalamanKategori({
           ))}
         </ul>
       </section>
-    </div>
+    </Halaman>
   );
 }

@@ -176,3 +176,27 @@ Temuan dari penambahan profil singkat dan peta di beranda:
     spesifisitas sama tetap kalah. Pemilihnya diawali `.leaflet-container`.
 19. **Label "Kota" berisi "Kota Yogyakarta"** di blok profil, sehingga katanya
     terbaca dua kali. Awalan itu dipangkas saat ditampilkan.
+
+Temuan dari pemeriksaan susunan di tujuh lebar layar (360, 390, 640, 768, 1024,
+1280, 1440), lewat `.matriks.mjs` sekali pakai yang mengukur tepi tiap halaman:
+
+20. **Empat lebar wadah yang berbeda** — `80rem`, `4xl`, `3xl`, dan `xl` — dengan
+    tiga padding tegak yang berbeda pula. Tepi kiri isi berpindah-pindah saat
+    berganti halaman, dan tidak satu pun sejajar dengan kop. Disatukan ke
+    `components/Halaman.tsx`.
+21. **Menu kop membungkus jadi dua baris di 768px.** Kelima butirnya tidak muat,
+    dan tinggi kop ikut berubah. Menu mendatar dinaikkan ke `lg`.
+22. **Dasar peta dan daftarnya tidak sejajar** di halaman peta. Peta setinggi
+    `62vh` *ditambah* kopnya, daftarnya hanya `62vh`, jadi melesetnya sebesar
+    satu kop dan baris terakhir terpotong tanpa tanda bahwa daftarnya bisa
+    digulir. Keduanya kini lembar berkop dengan tinggi dipegang barisnya.
+23. **Kotak kode kategori mengambang di tengah baris bidang.** `self-center`
+    menaruhnya di tengah baris yang tinggi, terpisah dari nama usaha yang
+    seharusnya ia dampingi. Diganti `self-start`.
+24. **Kaki halaman tiga kolom di 768px** terlalu sempit; kini dua kolom dulu di
+    `sm`, tiga baru di `lg`.
+25. **Nilai dan label bertabrakan di blok profil** — cacat yang lahir dari
+    perbaikan pertamanya sendiri. Susunan label-kiri-nilai-kanan dijadikan dua
+    kolom supaya tidak melar, tapi nilai kolom kiri lalu menempel di label
+    kolom kanan ("SanggrahanKELURAHAN"). Diganti kolom label bertetap 128px
+    dengan nilai rata kiri — terbaca sama di 390px maupun 1440px.

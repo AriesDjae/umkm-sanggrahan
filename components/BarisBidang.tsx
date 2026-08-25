@@ -39,7 +39,7 @@ export default function BarisBidang({
         </span>
 
         {/* Kolom kode kategori */}
-        <span className="col-start-2 row-start-1 sm:col-start-2 sm:self-center">
+        <span className="col-start-2 row-start-1 sm:col-start-2 sm:self-start">
           <KodeBidang kategori={kat} />
         </span>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PetaLazy from "@/components/PetaLazy";
+import Halaman from "@/components/Halaman";
 import { semuaUmkm } from "@/lib/umkm";
 import { site } from "@/lib/site";
 
@@ -16,7 +17,7 @@ export default function HalamanPeta() {
   const belum = daftar.length - berkoordinat;
 
   return (
-    <div className="mx-auto max-w-[80rem] px-4 py-10">
+    <Halaman>
       <div className="max-w-3xl">
         <h1 className="judul-registri text-[clamp(2rem,1.5rem+2.2vw,3rem)] text-tinta">
           Peta bidang
@@ -53,6 +54,6 @@ export default function HalamanPeta() {
         meleset beberapa meter — untuk arah jalan yang pasti, pakai tautan Google
         Maps di lembar bidangnya.
       </p>
-    </div>
+    </Halaman>
   );
 }

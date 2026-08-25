@@ -12,7 +12,7 @@ export default function Footer() {
       className="mt-24 border-t-[3px] border-double border-garis-tegas"
       style={{ backgroundColor: "var(--color-putih)" }}
     >
-      <div className="mx-auto grid max-w-[80rem] gap-12 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-[80rem] gap-12 px-4 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <p className="judul-registri text-xl text-tinta">{site.nama}</p>
           <p

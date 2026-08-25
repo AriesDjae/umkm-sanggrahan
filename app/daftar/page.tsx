@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Halaman from "@/components/Halaman";
 import { site } from "@/lib/site";
 import { tautanWa } from "@/lib/format";
 import { KATEGORI } from "@/lib/kategori";
@@ -43,7 +44,7 @@ export default function HalamanDaftar() {
   );
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
+    <Halaman prosa>
       <span className="stempel inline-block px-4 py-2 text-xs font-bold">GRATIS</span>
       <h1 className="judul-registri mt-6 text-[clamp(2rem,1.5rem+2.2vw,3rem)] text-tinta">
         Daftarkan bidang usaha Anda
@@ -186,6 +187,6 @@ export default function HalamanDaftar() {
         </a>
         <p className="mt-4 text-sm text-tinta-lembut">{site.kontakPengurus.nama}</p>
       </section>
-    </div>
+    </Halaman>
   );
 }

@@ -223,6 +223,28 @@ judul.
 
 ## Layout
 
+### Wadah halaman
+
+Satu wadah untuk seluruh halaman: `max-width: 80rem`, padding tepi 16px, padding
+tegak 40px — ditetapkan di satu tempat, `components/Halaman.tsx`, dan tidak
+diulang di masing-masing halaman. Akibatnya tepi kiri isi selalu jatuh di garis
+yang sama dengan kop dan kaki halaman, di halaman mana pun pengunjung berada.
+
+Halaman yang isinya bacaan panjang — `/tentang`, `/daftar`, dan halaman 404 —
+memakai `<Halaman prosa>`: yang dipersempit **ukuran barisnya** (68 huruf),
+bukan wadahnya. Bacaannya tetap nyaman tanpa tepinya ikut bergeser ke tengah.
+
+### Titik ganti susunan
+
+**Susunan berkolom berganti di `lg` (1024px), satu titik untuk seluruh situs.**
+Di bawah itu semuanya satu kolom. Kop halaman ikut aturan yang sama: menu
+mendatar baru muncul di `lg`, di bawahnya tombol menu — kelima butir menu tidak
+muat di 768px dan membungkus jadi dua baris kalau dipaksakan.
+
+Dua pengecualian yang memang muat lebih awal: kaki halaman jadi dua kolom di
+`sm` sebelum jadi tiga di `lg`, dan baris bidang berganti ke susunan empat kolom
+di `sm`.
+
 Wadah utama `max-width: 80rem` dengan padding tepi 1rem.
 
 Halaman registri memakai dua kolom pada lg: **kunci kategori 15rem yang
@@ -259,8 +281,11 @@ bukan tangga jarak.
 `npm run cek:kisi` memeriksanya di seluruh `app/` dan `components/`, dan ikut
 dijalankan `npm run qc`.
 
-Halaman peta memakai `[1fr 24rem]` pada lg; petanya `62vh` dengan lantai
-`26rem`, dan daftar di sampingnya bergulir sendiri dengan tinggi maksimum sama.
+Halaman peta memakai `[1fr 24rem]` pada lg. Peta dan daftarnya sama-sama lembar
+berkop, dan tingginya dipegang barisnya (`62vh` dengan lantai `26rem`) sehingga
+dasar keduanya sejajar — bukan masing-masing menetapkan tingginya sendiri, yang
+membuat dasarnya meleset sebesar satu kop. Di bawah lg keduanya menumpuk dengan
+tinggi `26rem`.
 
 Beranda menaruh **profil singkat dan peta berdampingan** tepat di bawah kop,
 `[23rem 1fr]` pada lg dengan `items-start` — profil sebagai blok identitas

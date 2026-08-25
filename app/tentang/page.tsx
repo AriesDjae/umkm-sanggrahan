@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Halaman from "@/components/Halaman";
 import { site } from "@/lib/site";
 import { semuaUmkm } from "@/lib/umkm";
 
@@ -13,12 +14,12 @@ export default function HalamanTentang() {
   const jumlah = semuaUmkm().length;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
+    <Halaman prosa>
       <h1 className="judul-registri text-[clamp(2rem,1.5rem+2.2vw,3rem)] text-tinta">
         Tentang registri ini
       </h1>
 
-      <div className="mt-10 flex flex-col gap-12" style={{ maxWidth: "68ch" }}>
+      <div className="mt-10 flex flex-col gap-12">
         <section>
           <h2 className="judul-registri text-xl text-tinta">Kenapa registri ini ada</h2>
           <p className="mt-4 leading-relaxed text-tinta-lembut">
@@ -123,6 +124,6 @@ export default function HalamanTentang() {
           </Link>
         </section>
       </div>
-    </div>
+    </Halaman>
   );
 }

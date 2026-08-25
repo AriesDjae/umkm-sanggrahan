@@ -56,7 +56,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-2 md:flex">
+        <nav className="ml-auto hidden items-center gap-2 lg:flex">
           {menu.map((m) => {
             const aktif = m.href === "/" ? path === "/" : path.startsWith(m.href);
             return (
@@ -83,7 +83,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setBuka((v) => !v)}
-          className="ml-auto grid h-12 w-12 place-items-center rounded-[2px] border-[1.5px] border-garis-tegas text-tinta md:hidden"
+          className="ml-auto grid h-12 w-12 place-items-center rounded-[2px] border-[1.5px] border-garis-tegas text-tinta lg:hidden"
           aria-label={buka ? "Tutup menu" : "Buka menu"}
           aria-expanded={buka}
         >
@@ -93,7 +93,7 @@ export default function Header() {
 
       {buka && (
         <nav
-          className="border-t-[1.5px] border-garis md:hidden"
+          className="border-t-[1.5px] border-garis lg:hidden"
           style={{ backgroundColor: "var(--color-lembar)" }}
         >
           <div className="mx-auto flex max-w-[80rem] flex-col px-4 py-2">

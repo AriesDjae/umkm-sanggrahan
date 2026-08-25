@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Halaman from "@/components/Halaman";
 
 export default function TidakDitemukan() {
   return (
-    <div className="mx-auto max-w-xl px-4 py-24">
+    <Halaman prosa>
       <div className="lembar p-8 sm:p-12">
         <p className="label-registri">Galat 404</p>
         <h1 className="judul-registri mt-4 text-3xl text-tinta">
@@ -32,6 +33,6 @@ export default function TidakDitemukan() {
           </Link>
         </div>
       </div>
-    </div>
+    </Halaman>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PencarianUmkm from "@/components/PencarianUmkm";
+import Halaman from "@/components/Halaman";
 import { IkonPin } from "@/components/Ikon";
 import { semuaUmkm } from "@/lib/umkm";
 import { site } from "@/lib/site";
@@ -15,7 +16,7 @@ export default function HalamanUmkm() {
   const daftar = semuaUmkm();
 
   return (
-    <div className="mx-auto max-w-[80rem] px-4 py-10">
+    <Halaman>
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <h1 className="judul-registri text-[clamp(2rem,1.5rem+2.2vw,3rem)] text-tinta">
@@ -53,6 +54,6 @@ export default function HalamanUmkm() {
           </div>
         )}
       </div>
-    </div>
+    </Halaman>
   );
 }

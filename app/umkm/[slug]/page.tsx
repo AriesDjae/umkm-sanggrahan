@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Halaman from "@/components/Halaman";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import BarisBidang from "@/components/BarisBidang";
@@ -120,7 +121,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mx-auto max-w-[80rem] px-4 py-8">
+      <Halaman>
         <nav aria-label="Jejak halaman" className="text-sm text-tinta-lembut">
           <Link href="/" className="underline-offset-4 hover:underline">
             Registri
@@ -374,7 +375,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
             </div>
           </section>
         )}
-      </div>
+      </Halaman>
     </>
   );
 }
