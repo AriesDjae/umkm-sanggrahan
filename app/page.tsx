@@ -14,68 +14,143 @@ export default function Beranda() {
   const hitung = jumlahPerKategori();
   const berkoordinat = semua.filter((u) => u.koordinat).length;
   const kategoriTerisi = KATEGORI.filter((k) => hitung[k.nama]).length;
+  // Hanya kategori yang sudah terisi yang mendapat ruas di pita sebaran:
+  // ruas berjumlah nol tidak punya lebar, dan menyisakannya hanya membuat
+  // garis pemisah menumpuk. Yang kosong tetap tercatat di indeks di bawah.
+  const sebaran = KATEGORI.filter((k) => hitung[k.nama]);
 
   return (
     <>
-      {/* ---- Kop registri ---- */}
+      {/* ---- Kop registri: lembar sampul ---- */}
       <section className="mx-auto max-w-[80rem] px-4 pt-10 pb-16">
-        <h1 className="judul-registri max-w-[18ch] text-[clamp(2.4rem,1.6rem+3.6vw,4.2rem)] text-tinta">
-          Registri usaha warga Sanggrahan
-        </h1>
+        <div className="lembar">
+          {/*
+            Pita kop dokumen. Kop beranda dulu satu-satunya blok di situs ini
+            yang berdiri tanpa lembar dan tanpa kop — ia keluar dari perangkat
+            paling kuat sistemnya sendiri, dan itu yang membuatnya terbaca datar
+            di sebelah blok-blok lain yang berbingkai.
+          */}
+          <div className="kop flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 px-4 py-4 sm:px-8">
+            <p className="label-registri">Registri bidang usaha</p>
+            <p className="label-registri">
+              {site.wilayahSingkat} · RW 1 &amp; RW 3
+            </p>
+          </div>
 
-        <p
-          className="mt-6 text-base leading-relaxed text-tinta-lembut sm:text-lg"
-          style={{ maxWidth: "62ch" }}
-        >
-          Pendataan resmi usaha milik tetangga Anda di RW 1 dan RW 3,{" "}
-          {site.kelurahan}, {site.kemantren}. Tiap bidang diperiksa pengurus
-          sebelum dicatat. Lihat siapa yang bertanda buka hari ini, lalu hubungi
-          pemiliknya langsung.
-        </p>
+          <div className="px-4 py-8 sm:px-8 sm:py-10">
+            <h1 className="judul-registri max-w-[18ch] text-[clamp(2.4rem,1.6rem+3.6vw,4.2rem)] text-tinta">
+              Registri usaha warga Sanggrahan
+            </h1>
 
-        {/* Blok keterangan lembar — data dokumen, bukan pajangan angka */}
-        <dl className="mt-10 grid max-w-3xl grid-cols-2 border-[1.5px] border-garis sm:grid-cols-4">
-          {[
-            { label: "Bidang terdaftar", nilai: String(semua.length) },
-            {
-              label: "Kategori terisi",
-              nilai: `${kategoriTerisi} dari ${KATEGORI.length}`,
-            },
-            { label: "Bertitik lokasi", nilai: `${berkoordinat} bidang` },
-            { label: "Wilayah", nilai: "RW 1 & RW 3" },
-          ].map((b) => (
-            <div
-              key={b.label}
-              className="border-r-[1.5px] border-b-[1.5px] border-garis px-4 py-4 last:border-r-0 sm:border-b-0"
+            <p
+              className="mt-6 text-base leading-relaxed text-tinta-lembut sm:text-lg"
+              style={{ maxWidth: "62ch" }}
             >
-              <dt className="label-registri">{b.label}</dt>
-              <dd className="angka mt-2 text-base font-semibold text-tinta">
-                {b.nilai}
-              </dd>
-            </div>
-          ))}
-        </dl>
+              Pendataan resmi usaha milik tetangga Anda di RW 1 dan RW 3,{" "}
+              {site.kelurahan}, {site.kemantren}. Tiap bidang diperiksa pengurus
+              sebelum dicatat. Lihat siapa yang bertanda buka hari ini, lalu
+              hubungi pemiliknya langsung.
+            </p>
 
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Link
-            href="/umkm"
-            className="inline-flex items-center gap-2 rounded-[2px] border-[1.5px] px-6 py-4 text-base font-semibold"
-            style={{
-              backgroundColor: "var(--color-resmi)",
-              borderColor: "var(--color-resmi-tua)",
-              color: "var(--color-putih)",
-            }}
-          >
-            Buka registri lengkap
-            <IkonPanah className="h-4 w-4" />
-          </Link>
-          <Link
-            href="/peta"
-            className="inline-flex items-center gap-2 rounded-[2px] border-[1.5px] border-garis-tegas px-6 py-4 text-base font-semibold text-tinta"
-          >
-            <IkonPin className="h-4 w-4" />
-            Peta bidang
-          </Link>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/umkm"
+                className="inline-flex items-center gap-2 rounded-[2px] border-[1.5px] px-6 py-4 text-base font-semibold"
+                style={{
+                  backgroundColor: "var(--color-resmi)",
+                  borderColor: "var(--color-resmi-tua)",
+                  color: "var(--color-putih)",
+                }}
+              >
+                Buka registri lengkap
+                <IkonPanah className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/peta"
+                className="inline-flex items-center gap-2 rounded-[2px] border-[1.5px] border-garis-tegas px-6 py-4 text-base font-semibold text-tinta"
+              >
+                <IkonPin className="h-4 w-4" />
+                Peta bidang
+              </Link>
+            </div>
+          </div>
+
+          {/*
+            Pita sebaran. Arsiran kategori selama ini hanya hidup sebesar petak
+            32px di samping kode hurufnya; di sini ia dipakai pada skala peta.
+            Lebar tiap ruas sebanding dengan jumlah bidangnya, jadi pitanya
+            memang membawa keterangan — bukan hiasan yang kebetulan bergaris.
+          */}
+          <div className="border-t-[1.5px] border-garis">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 px-4 py-4 sm:px-8">
+              <h2 className="label-registri">Sebaran bidang</h2>
+              <p className="text-sm text-tinta-lembut">
+                Lebar tiap ruas sebanding dengan jumlah bidangnya.{" "}
+                <span className="angka font-semibold text-tinta">
+                  {kategoriTerisi} dari {KATEGORI.length}
+                </span>{" "}
+                kategori sudah terisi.
+              </p>
+            </div>
+
+            <div
+              className="flex h-16 border-t-[1.5px] border-garis sm:h-24"
+              role="img"
+              aria-label={`Sebaran ${semua.length} bidang menurut kategori: ${sebaran
+                .map((k) => `${k.nama} ${hitung[k.nama]}`)
+                .join(", ")}.`}
+            >
+              {sebaran.map((k) => (
+                <div
+                  key={k.slug}
+                  style={{ flexGrow: hitung[k.nama] }}
+                  className={`arsir ${k.arsir} flex min-w-0 basis-0 items-center justify-center overflow-hidden border-r-[1.5px] border-garis-tegas last:border-r-0`}
+                >
+                  {/*
+                    Petak kode dan jumlahnya berdiri di atas bidang putih supaya
+                    kontrasnya tidak bergantung pada arsiran di belakangnya —
+                    arsiran yang rapat dan yang penuh punya kepekatan berbeda.
+                  */}
+                  <span
+                    className="hidden shrink-0 flex-col items-center gap-2 border-[1.5px] border-tinta px-2 py-2 sm:flex"
+                    style={{ backgroundColor: "var(--color-putih)" }}
+                  >
+                    <span className="text-sm leading-none font-bold text-tinta">
+                      {k.kode}
+                    </span>
+                    <span className="angka text-xs leading-none text-tinta-lembut">
+                      {hitung[k.nama]}
+                    </span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Keterangan lembar — data dokumen, bukan pajangan angka */}
+          <dl className="grid grid-cols-2 border-t-[1.5px] border-garis sm:grid-cols-4">
+            {[
+              { label: "Bidang terdaftar", nilai: String(semua.length) },
+              {
+                label: "Kategori terisi",
+                nilai: `${kategoriTerisi} dari ${KATEGORI.length}`,
+              },
+              { label: "Bertitik lokasi", nilai: `${berkoordinat} bidang` },
+              { label: "Wilayah", nilai: "RW 1 & RW 3" },
+            ].map((b, i) => (
+              <div
+                key={b.label}
+                className={`px-4 py-4 sm:px-8 ${
+                  i % 2 === 0 ? "border-r-[1.5px] border-garis" : ""
+                } ${i < 2 ? "border-b-[1.5px] border-garis sm:border-b-0" : ""} sm:border-r-[1.5px] sm:last:border-r-0`}
+              >
+                <dt className="label-registri">{b.label}</dt>
+                <dd className="angka mt-2 text-base font-semibold text-tinta">
+                  {b.nilai}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
