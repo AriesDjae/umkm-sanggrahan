@@ -8,21 +8,12 @@ import type { ReactNode } from "react";
  * dan py-24 — sehingga tepi kirinya berpindah-pindah saat pengunjung berpindah
  * halaman, dan tidak ada satu pun yang sejajar dengan kop maupun kaki halaman.
  *
- * Sekarang tepi luarnya selalu sama dan selalu sejajar dengan kop. Halaman yang
- * isinya bacaan panjang memakai `prosa`: yang dipersempit ukuran barisnya, bukan
- * wadahnya, jadi tepinya tetap di garis yang sama seperti halaman lain.
+ * Dulu ada saklar `prosa` yang membungkus seluruh isi halaman dalam kotak 68ch.
+ * Niatnya mempersempit ukuran baris, tetapi yang dipersempit justru wadahnya:
+ * isinya jadi merapat ke kiri dan separuh kanan layar lebar tinggal kosong.
+ * Sekarang ukuran baris dipegang `.ukuran-baca` pada teksnya sendiri, dan wadah
+ * ini selalu selebar kop halaman.
  */
-export default function Halaman({
-  children,
-  prosa = false,
-}: {
-  children: ReactNode;
-  /** Batasi lebar baris ke ukuran yang nyaman dibaca (68 huruf). */
-  prosa?: boolean;
-}) {
-  return (
-    <div className="mx-auto max-w-[80rem] px-4 py-10">
-      {prosa ? <div style={{ maxWidth: "68ch" }}>{children}</div> : children}
-    </div>
-  );
+export default function Halaman({ children }: { children: ReactNode }) {
+  return <div className="mx-auto max-w-[80rem] px-4 py-10">{children}</div>;
 }

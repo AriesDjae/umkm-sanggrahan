@@ -178,6 +178,16 @@ input[type="search"]::-webkit-search-cancel-button {
   background-image: none;
 }
 
+/*
+  Satu ukuran baris untuk seluruh halaman bacaan. Ditulis sekali di sini supaya
+  tidak ada lagi blok yang menetapkan lebarnya sendiri: sebelumnya /daftar
+  memakai 64ch, 62ch, 70ch, 72ch, dan max-w-md dalam satu halaman, dan tepi
+  kanannya jadi bergerigi karena tidak ada dua blok yang berhenti di garis sama.
+*/
+.ukuran-baca {
+  max-width: 68ch;
+}
+
 /* ---------- Lembar dan baris ---------- */
 
 /*
