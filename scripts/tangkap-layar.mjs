@@ -27,9 +27,11 @@ if (!CHROME) {
 const HALAMAN = [
   { nama: "beranda", jalur: "/" },
   { nama: "daftar-umkm", jalur: "/umkm" },
-  { nama: "detail-umkm", jalur: "/umkm/keripik-bu-sri" },
+  { nama: "detail-umkm", jalur: "/umkm/tujutiga-coffee-shop" },
   { nama: "peta", jalur: "/peta" },
   { nama: "kategori", jalur: "/kategori/kuliner" },
+  { nama: "tentang", jalur: "/tentang" },
+  { nama: "daftar", jalur: "/daftar" },
 ];
 
 const UKURAN = [

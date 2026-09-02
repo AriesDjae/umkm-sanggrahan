@@ -1,0 +1,31 @@
+{
+  "nomor": "SGR-01-002",
+  "nama": "Tujutiga Coffee Shop",
+  "pemilik": "",
+  "rw": 1,
+  "rt": "",
+  "kategori": "Kuliner",
+  "deskripsi": "Kedai kopi di sisi timur Jl. Mawar, sedikit di selatan mulut Jl. Mawar V. Tercatat di banner Tourist RoadMap RW 01 Sanggrahan sebagai pin kuning nomor 2. Nama pemilik, nomor WhatsApp, jam buka, dan daftar harganya menyusul setelah pendataan warga.",
+  "alamat": "Sanggrahan",
+  "maps": "",
+  "koordinat": {
+    "lat": -7.79393,
+    "lng": 110.3837
+  },
+  "sumberTitik": "perkiraan-banner",
+  "whatsapp": "",
+  "marketplace": {
+    "shopee": "",
+    "tokopedia": "",
+    "tiktok": "",
+    "gofood": ""
+  },
+  "sosmed": {
+    "instagram": "",
+    "facebook": ""
+  },
+  "foto": "",
+  "produk": [],
+  "unggulan": false,
+  "aktif": true
+}

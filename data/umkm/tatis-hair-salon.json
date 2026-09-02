@@ -1,0 +1,31 @@
+{
+  "nomor": "SGR-01-014",
+  "nama": "Tati's Hair Salon",
+  "pemilik": "",
+  "rw": 1,
+  "rt": "",
+  "kategori": "Jasa",
+  "deskripsi": "Salon rambut di blok timur bawah, di selatan pin merah 3, dekat Jl. Tunjungan. Tercatat di banner Tourist RoadMap RW 01 Sanggrahan sebagai pin merah nomor 4. Nama pemilik, nomor WhatsApp, jam buka, dan daftar harganya menyusul setelah pendataan warga.",
+  "alamat": "Sanggrahan",
+  "maps": "",
+  "koordinat": {
+    "lat": -7.79488,
+    "lng": 110.38522
+  },
+  "sumberTitik": "perkiraan-banner",
+  "whatsapp": "",
+  "marketplace": {
+    "shopee": "",
+    "tokopedia": "",
+    "tiktok": "",
+    "gofood": ""
+  },
+  "sosmed": {
+    "instagram": "",
+    "facebook": ""
+  },
+  "foto": "",
+  "produk": [],
+  "unggulan": false,
+  "aktif": true
+}

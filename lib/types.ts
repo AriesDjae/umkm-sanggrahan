@@ -35,6 +35,12 @@ export type Umkm = {
   alamat: string;
   maps?: string;
   koordinat?: Koordinat;
+  /**
+   * Asal titik lokasi. "osm" dan "gps" adalah titik sebenarnya; "perkiraan-banner"
+   * ditarik dari pin di banner peta kampung dan meleset puluhan meter, jadi
+   * situs harus mengatakannya, bukan memajangnya seolah hasil ukur.
+   */
+  sumberTitik?: "gps" | "osm" | "perkiraan-banner";
   jam?: JamBuka;
   /** Keterangan jam bebas, dipakai kalau `jam` belum diisi. */
   jamBuka?: string;

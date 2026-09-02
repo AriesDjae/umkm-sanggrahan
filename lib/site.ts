@@ -32,8 +32,8 @@ export const site = {
     whatsapp: "6281234567890", // TODO: ganti dengan nomor asli pengurus
   },
 
-  /** Titik tengah peta kampung. Perkiraan, ganti kalau sudah ada titik pasti. */
-  pusatPeta: { lat: -7.8009, lng: 110.3806 },
+  /** Titik tengah peta kampung, di antara sebaran bidang RW 1 dan RW 3. */
+  pusatPeta: { lat: -7.7935, lng: 110.3858 },
 
   sosmed: {
     instagram: "", // contoh: "https://instagram.com/umkmsanggrahan"

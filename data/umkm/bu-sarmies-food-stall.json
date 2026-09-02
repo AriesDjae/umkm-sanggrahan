@@ -1,0 +1,31 @@
+{
+  "nomor": "SGR-01-009",
+  "nama": "Bu Sarmie's Food Stall",
+  "pemilik": "",
+  "rw": 1,
+  "rt": "",
+  "kategori": "Kuliner",
+  "deskripsi": "Warung makan di blok timur atas, di tepi jalan sisi timur. Tercatat di banner Tourist RoadMap RW 01 Sanggrahan sebagai pin kuning nomor 9. Nama pemilik, nomor WhatsApp, jam buka, dan daftar harganya menyusul setelah pendataan warga.",
+  "alamat": "Sanggrahan",
+  "maps": "",
+  "koordinat": {
+    "lat": -7.79435,
+    "lng": 110.3855
+  },
+  "sumberTitik": "perkiraan-banner",
+  "whatsapp": "",
+  "marketplace": {
+    "shopee": "",
+    "tokopedia": "",
+    "tiktok": "",
+    "gofood": ""
+  },
+  "sosmed": {
+    "instagram": "",
+    "facebook": ""
+  },
+  "foto": "",
+  "produk": [],
+  "unggulan": false,
+  "aktif": true
+}

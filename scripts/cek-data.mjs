@@ -126,10 +126,22 @@ for (const f of berkasSemua) {
   }
 
   // --- Kolom wajib ---
-  for (const kolom of ["nama", "pemilik", "kategori", "deskripsi", "alamat", "whatsapp"]) {
+  // Tanpa ini lembar bidangnya tidak bisa berdiri sama sekali.
+  for (const kolom of ["nama", "kategori", "deskripsi", "alamat"]) {
     if (!d[kolom] || String(d[kolom]).trim() === "") {
       catat(salah, f, `Kolom "${kolom}" masih kosong`);
     }
+  }
+
+  // --- Kolom yang boleh menyusul ---
+  // Pendataan kampung datang bertahap: banyak bidang lebih dulu terdaftar dari
+  // papan peta kampung, baru kemudian disambangi untuk dilengkapi. Situs sudah
+  // tahu cara menampilkan bidang seperti itu, jadi ini catatan, bukan kesalahan.
+  if (!d.pemilik || String(d.pemilik).trim() === "") {
+    catat(ingat, f, `Belum ada nama pemilik`);
+  }
+  if (!d.whatsapp || String(d.whatsapp).trim() === "") {
+    catat(ingat, f, `Belum ada nomor WhatsApp, jadi tombol pesan belum muncul di lembarnya`);
   }
 
   if (d.rw === undefined || d.rw === null || d.rw === "") {
@@ -179,7 +191,7 @@ for (const f of berkasSemua) {
 
   // --- Produk ---
   if (!Array.isArray(d.produk) || d.produk.length === 0) {
-    catat(salah, f, `Belum ada satu pun produk atau layanan`);
+    catat(ingat, f, `Belum ada satu pun produk atau layanan`);
   } else {
     jumlahProduk += d.produk.length;
     d.produk.forEach((p, i) => {

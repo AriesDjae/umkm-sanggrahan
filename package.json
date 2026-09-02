@@ -11,6 +11,7 @@
     "cek:kisi": "node scripts/cek-kisi.mjs",
   "cek:kontras": "node scripts/cek-kontras.mjs",
     "umkm:baru": "node scripts/tambah-umkm.mjs",
+    "umkm:dari-banner": "node scripts/dari-banner.mjs",
     "umkm:cek": "node scripts/cek-data.mjs",
     "qc": "npm run cek:tipe && npm run lint && npm run cek:kisi && npm run cek:kontras && npm run build && npm run cek:halaman && npm run umkm:cek",
     "cek:halaman": "node scripts/cek-halaman.mjs"
