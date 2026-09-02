@@ -13,6 +13,10 @@ export function formatRupiah(harga: number | null | undefined): string {
 
 /** Rentang harga sebuah UMKM, untuk ditampilkan di kartu daftar. */
 export function rentangHarga(u: Umkm): string {
+  // Belum punya produk sama sekali beda dengan punya produk tanpa harga pasti:
+  // yang pertama berarti pendataannya memang belum sampai situ.
+  if (u.produk.length === 0) return "Belum ada daftar harga";
+
   const harga = u.produk
     .map((p) => p.harga)
     .filter((h): h is number => typeof h === "number");

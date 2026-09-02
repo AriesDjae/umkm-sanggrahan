@@ -54,12 +54,14 @@ export default function BarisBidang({
             {umkm.rt ? ` / RT ${umkm.rt}` : ""}
           </span>
 
-          <span className="mt-2 block text-sm text-tinta">
-            {umkm.produk
-              .slice(0, 3)
-              .map((p) => p.nama)
-              .join(" · ")}
-          </span>
+          {umkm.produk.length > 0 && (
+            <span className="mt-2 block text-sm text-tinta">
+              {umkm.produk
+                .slice(0, 3)
+                .map((p) => p.nama)
+                .join(" · ")}
+            </span>
+          )}
 
           <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="angka text-sm font-semibold text-tinta">

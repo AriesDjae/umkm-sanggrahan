@@ -86,7 +86,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
     name: u.nama,
     description: u.deskripsi,
     url: `${site.url}/umkm/${u.slug}`,
-    telephone: `+${u.whatsapp.replace(/\D/g, "")}`,
+    ...(u.whatsapp ? { telephone: `+${u.whatsapp.replace(/\D/g, "")}` } : {}),
     identifier: u.nomor,
     address: {
       "@type": "PostalAddress",
@@ -104,7 +104,7 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
           },
         }
       : {}),
-    founder: u.pemilik,
+    ...(u.pemilik ? { founder: u.pemilik } : {}),
     ...(foto ? { image: `${site.url}${foto}` } : {}),
     ...(jam ? { openingHours: jam } : {}),
     makesOffer: u.produk.map((p) => ({
@@ -184,7 +184,9 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
 
             {/* ---- Keterangan bidang ---- */}
             <dl className="mt-10 grid gap-x-10 gap-y-0 border-t-[1.5px] border-garis sm:grid-cols-2">
-              <Baris label="Pemilik">{u.pemilik}</Baris>
+              <Baris label="Pemilik">
+                {u.pemilik || <span className="text-tinta-lembut">Belum dicatat</span>}
+              </Baris>
               <Baris label="Alamat">
                 <span className="block">{u.alamat}</span>
                 <span className="mt-2 block text-tinta-lembut">
@@ -256,6 +258,13 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
                   ) : (
                     <span className="text-tinta-lembut">Belum dicatat</span>
                   )}
+                  {u.sumberTitik === "perkiraan-banner" && (
+                    <span className="block w-full text-tinta-lembut">
+                      Titik ini ditarik dari pin di banner peta kampung, bukan
+                      hasil ukur di tempat — melesetnya bisa puluhan meter.
+                      Pakai alamat dan nomor bidangnya untuk memastikan.
+                    </span>
+                  )}
                   {u.maps && (
                     <a
                       href={u.maps}
@@ -276,6 +285,12 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
                 Daftar produk dan layanan ({u.produk.length})
               </h2>
 
+              {u.produk.length === 0 ? (
+                <p className="mt-4 border-y-[1.5px] border-garis py-6 text-sm text-tinta-lembut">
+                  Daftar produk dan harganya belum dicatat pengurus. Bidang ini
+                  baru terdaftar dari papan peta kampung.
+                </p>
+              ) : (
               <table className="mt-4 w-full border-collapse text-left">
                 <thead>
                   <tr className="border-y-[1.5px] border-garis-tegas">
@@ -327,36 +342,58 @@ export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]"
                         )}
                       </td>
                       <td className="py-4 align-top text-right">
-                        <TombolWa
-                          nomor={u.whatsapp}
-                          pesan={pesanPesanProduk(u, p)}
-                          ukuran="kecil"
-                        >
-                          Pesan
-                        </TombolWa>
+                        {u.whatsapp && (
+                          <TombolWa
+                            nomor={u.whatsapp}
+                            pesan={pesanPesanProduk(u, p)}
+                            ukuran="kecil"
+                          >
+                            Pesan
+                          </TombolWa>
+                        )}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              )}
             </section>
 
             {/* ---- Hubungi ---- */}
             <section className="mt-12 border-t-[3px] border-double border-garis-tegas pt-8">
               <h2 className="judul-registri text-xl text-tinta">Hubungi pemilik</h2>
-              <p
-                className="mt-2 text-sm leading-relaxed text-tinta-lembut"
-                style={{ maxWidth: "60ch" }}
-              >
-                Langsung ke pemilik usaha, tanpa perantara dan tanpa biaya
-                tambahan. Jual beli terjadi antara Anda dan pemilik; pengurus{" "}
-                {site.nama} hanya mencatat dan mempromosikan.
-              </p>
-              <TombolWa
-                nomor={u.whatsapp}
-                pesan={pesanTanyaUmkm(u)}
-                className="mt-6"
-              />
+              {u.whatsapp ? (
+                <>
+                  <p
+                    className="mt-2 text-sm leading-relaxed text-tinta-lembut"
+                    style={{ maxWidth: "60ch" }}
+                  >
+                    Langsung ke pemilik usaha, tanpa perantara dan tanpa biaya
+                    tambahan. Jual beli terjadi antara Anda dan pemilik; pengurus{" "}
+                    {site.nama} hanya mencatat dan mempromosikan.
+                  </p>
+                  <TombolWa
+                    nomor={u.whatsapp}
+                    pesan={pesanTanyaUmkm(u)}
+                    className="mt-6"
+                  />
+                </>
+              ) : (
+                <p
+                  className="mt-2 text-sm leading-relaxed text-tinta-lembut"
+                  style={{ maxWidth: "60ch" }}
+                >
+                  Nomor WhatsApp bidang ini belum dicatat pengurus, jadi belum
+                  bisa dihubungi lewat situs.{" "}
+                  <Link
+                    href="/daftar"
+                    className="font-semibold text-resmi underline underline-offset-4"
+                  >
+                    Pemilik usaha bisa melengkapinya di sini
+                  </Link>
+                  .
+                </p>
+              )}
             </section>
           </div>
         </article>

@@ -15,6 +15,9 @@ export default function HalamanPeta() {
   const daftar = semuaUmkm();
   const berkoordinat = daftar.filter((u) => u.koordinat).length;
   const belum = daftar.length - berkoordinat;
+  const perkiraan = daftar.filter(
+    (u) => u.koordinat && u.sumberTitik === "perkiraan-banner",
+  ).length;
 
   return (
     <Halaman>
@@ -49,10 +52,23 @@ export default function HalamanPeta() {
         </p>
       )}
 
+      {perkiraan > 0 && (
+        <p className="mt-6 border-[1.5px] border-garis-tegas bg-lembar-alt px-4 py-4 text-sm text-tinta">
+          <span className="label-registri block">Ketelitian titik</span>
+          <span className="mt-2 block" style={{ maxWidth: "68ch" }}>
+            {perkiraan} dari {berkoordinat} titik masih <strong>perkiraan</strong>,
+            ditarik dari pin di banner peta kampung RW 1 dan RW 3 lalu dicocokkan ke
+            jalan asli OpenStreetMap — bukan hasil ukur di tempat. Pencocokannya
+            sendiri sudah teliti di bawah 10 meter, tapi seberapa cermat pin itu
+            ditaruh di bannernya tidak bisa diketahui dari foto. Anggap titiknya
+            menunjuk bangunan yang benar di gang yang benar, bukan alamat pintu.
+          </span>
+        </p>
+      )}
+
       <p className="mt-2 text-xs text-tinta-lembut">
-        Latar peta dari OpenStreetMap. Titik lokasi dicatat pengurus dan bisa
-        meleset beberapa meter — untuk arah jalan yang pasti, pakai tautan Google
-        Maps di lembar bidangnya.
+        Latar peta dari OpenStreetMap. Untuk arah jalan yang pasti, pakai tautan
+        Google Maps di lembar bidangnya.
       </p>
     </Halaman>
   );
