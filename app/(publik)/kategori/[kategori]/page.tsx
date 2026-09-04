@@ -4,19 +4,19 @@ import { notFound } from "next/navigation";
 import BarisBidang from "@/components/BarisBidang";
 import KodeBidang from "@/components/KodeBidang";
 import Halaman from "@/components/Halaman";
-import { KATEGORI, cariKategori } from "@/lib/kategori";
-import { umkmByKategori } from "@/lib/umkm";
+import { kategoriBySlug, semuaKategori, umkmByKategori } from "@/lib/umkm";
 import { site } from "@/lib/site";
 
-export function generateStaticParams() {
-  return KATEGORI.map((k) => ({ kategori: k.slug }));
+export async function generateStaticParams() {
+  const daftar = await semuaKategori();
+  return daftar.map((k) => ({ kategori: k.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/kategori/[kategori]">): Promise<Metadata> {
   const { kategori } = await params;
-  const kat = cariKategori(kategori);
+  const kat = await kategoriBySlug(kategori);
   if (!kat) return { title: "Kategori tidak ditemukan" };
 
   return {
@@ -35,11 +35,11 @@ export default async function HalamanKategori({
   params,
 }: PageProps<"/kategori/[kategori]">) {
   const { kategori } = await params;
-  const kat = cariKategori(kategori);
+  const kat = await kategoriBySlug(kategori);
   if (!kat) notFound();
 
-  const daftar = umkmByKategori(kat.slug);
-  const lainnya = KATEGORI.filter((k) => k.slug !== kat.slug);
+  const [daftar, semua] = await Promise.all([umkmByKategori(kat.slug), semuaKategori()]);
+  const lainnya = semua.filter((k) => k.slug !== kat.slug);
 
   return (
     <Halaman>

@@ -2,9 +2,11 @@
 
 Dokumen ini adalah rencana kerja.
 
-> **Status per 24 Agustus 2026:** Tahap 2, 3, dan 4 sudah selesai — web sudah berdiri
-> dan berjalan dengan 5 data contoh. Yang tersisa: pendataan UMKM asli (tahap 1 & 5),
-> lalu publikasi (tahap 6) dan serah terima (tahap 7).
+> **Status per 4 September 2026:** Tahap 2, 3, 4, dan 7 selesai. Registri berisi
+> **26 bidang** hasil baca banner Tourist RoadMap kampung, dan sejak hari ini isinya
+> dikelola pengurus lewat **panel di `/admin`** — bukan lagi berkas JSON yang perlu
+> deploy ulang. Yang tersisa: menyambangi 26 bidang itu untuk melengkapi nama pemilik,
+> nomor WhatsApp, jam buka, produk, dan foto (tahap 1 & 5), lalu publikasi (tahap 6).
 > Panduan pengelolaan harian ada di [CARA-TAMBAH-UMKM.md](CARA-TAMBAH-UMKM.md).
 
 ---
@@ -24,7 +26,9 @@ Ukuran keberhasilan:
 | Hal | Pilihan | Alasan |
 |---|---|---|
 | Stack | Next.js (App Router) + Tailwind CSS | Halaman di-generate statis → cepat, SEO kuat, sitemap & metadata otomatis |
-| Data UMKM | File JSON di dalam project | Gratis, cepat, tidak perlu server/database |
+| Data UMKM | ~~File JSON di dalam project~~ → **PostgreSQL (Neon) + Prisma** | Diubah 4 Sep 2026. Berkas JSON menuntut pengurus paham Git dan deploy ulang tiap kali; itu memastikan registri berhenti diperbarui begitu saya lepas tangan. Berkas JSON yang lama kini jadi bahan seed. |
+| Pengelolaan isi | Panel pengurus di `/admin`, login sendiri | Pengurus bisa menambah dan menyunting dari HP, tanpa terminal |
+| Penyimpanan foto | Vercel Blob (produksi), `public/unggahan` (lokal) | Sistem berkas Vercel hanya-baca, jadi unggahan tidak bisa ditulis ke folder project |
 | Kontak pembeli | Tombol WhatsApp + link marketplace | Sesuai kebiasaan UMKM desa, nol biaya, tanpa maintenance |
 | Hosting | Vercel (paket gratis) | Deploy otomatis, HTTPS, CDN, tanpa biaya bulanan |
 | Status data | Belum ada → perlu pendataan dulu | Web dibangun paralel dengan data contoh, lalu diisi data asli |
@@ -50,7 +54,12 @@ Isi halaman detail UMKM (`/umkm/[slug]`):
 
 ## 4. Skema data UMKM
 
-Satu file `data/umkm.json`, berisi array objek seperti ini:
+> **Usang sejak 4 September 2026.** Skema yang berlaku sekarang ada di
+> [`prisma/schema.prisma`](../prisma/schema.prisma): tabel `Umkm`, `ProdukUmkm`,
+> `Kategori`, `User`, dan `Pengaturan`. Bentuk JSON di bawah masih dipakai
+> `data/umkm/*.json` sebagai bahan seed, jadi tetap dicatat di sini.
+
+Satu berkas per UMKM di `data/umkm/`, berisi objek seperti ini:
 
 ```json
 {
@@ -132,7 +141,7 @@ Web yang tidak disebar = tidak ada gunanya. Tiga lapis:
 | **4. SEO & share** | Metadata, sitemap, schema.org, Open Graph, QR code | Siap ditemukan mesin pencari |
 | **5. Isi data asli** | Masukkan data + foto hasil pendataan | Web berisi UMKM sungguhan |
 | **6. Online** | Deploy ke Vercel, daftar Search Console & Google Bisnisku | Web bisa diakses publik |
-| **7. Serah terima** | Panduan cara menambah UMKM baru untuk pengurus | Bisa dirawat tanpa saya |
+| **7. Serah terima** | Panel pengurus + panduan cara menambah UMKM baru | Bisa dirawat tanpa saya |
 
 Tahap 2–4 bisa dikerjakan sekarang tanpa menunggu data selesai, memakai data contoh.
 
@@ -154,5 +163,37 @@ Tahap 2–4 bisa dikerjakan sekarang tanpa menunggu data selesai, memakai data c
 ## 10. Batasan yang perlu disadari
 
 - Google butuh waktu **beberapa minggu sampai berbulan-bulan** untuk mengindeks situs baru. Hasil tidak instan.
-- Situs statis berarti setiap penambahan UMKM baru perlu deploy ulang. Prosesnya akan saya buatkan panduannya, tapi tetap butuh satu orang yang mau melakukannya.
+- ~~Situs statis berarti setiap penambahan UMKM baru perlu deploy ulang.~~ Tidak lagi
+  berlaku sejak 4 September 2026: pengurus menambah dan menyunting dari `/admin`, dan
+  halaman publiknya menyegarkan diri sendiri. Yang tetap dibutuhkan adalah satu orang
+  yang mau rutin melakukannya.
 - Dampak terbesar untuk usaha lokal justru datang dari **Google Bisnisku dan media sosial**, bukan dari web itu sendiri. Web berperan sebagai pusat/rujukan yang linknya disebar.
+
+---
+
+## 11. Riwayat perubahan besar
+
+### 4 September 2026 — registri pindah ke basis data, panel pengurus berdiri
+
+Sebelumnya isi registri hidup sebagai berkas JSON di dalam project. Bagus untuk dua
+tiga orang yang paham Git, tetapi mustahil dipakai pengurus RW dari peramban — dan
+sistem berkas Vercel hanya-baca, jadi menulis dari web pun tidak mungkin.
+
+Yang berubah:
+
+- **Basis data** PostgreSQL sendiri di Neon, terpisah dari basis data Profil RW.
+  Tabel: `User`, `Kategori`, `Umkm`, `ProdukUmkm`, `Pengaturan`.
+- **Seed** memindahkan 26 berkas JSON + `kategori.json` ke basis data. Aman diulang:
+  mencocokkan per slug, dan tidak pernah menimpa sandi akun yang sudah ada.
+- **Login sendiri** — cookie JWT, bcrypt, dua peran: `ADMIN` dan `PENGURUS`.
+- **Panel `/admin`** — CRUD bidang usaha (beserta produk dan unggah foto), kategori,
+  akun pengurus, dan pengaturan situs. Dasbornya berupa daftar pekerjaan, bukan
+  pajangan angka: bidang mana yang belum punya WhatsApp, jam buka, produk, titik peta.
+- **Halaman publik** pindah ke grup rute `app/(publik)/` supaya panel bisa memakai
+  kerangka halaman sendiri. Halamannya tetap statis, disegarkan lewat `revalidatePath`
+  setiap kali pengurus menyimpan.
+- **Tautan dua arah** dengan situs Profil RW Sanggrahan di kop dan kaki kedua situs.
+- **`npm run uji:panel`** — uji jalan ujung-ke-ujung lewat peramban sungguhan.
+
+Yang belum: environment variable di Vercel (`DATABASE_URL`, `SESSION_SECRET`,
+`BLOB_READ_WRITE_TOKEN`) dan penggantian sandi admin bawaan.

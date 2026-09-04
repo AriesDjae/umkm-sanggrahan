@@ -8,7 +8,6 @@ import KodeBidang from "@/components/KodeBidang";
 import TombolWa from "@/components/TombolWa";
 import TandaBuka from "@/components/TandaBuka";
 import { IkonPin } from "@/components/Ikon";
-import { cariKategori, KATEGORI_CADANGAN } from "@/lib/kategori";
 import { semuaUmkm, umkmBySlug } from "@/lib/umkm";
 import {
   formatRupiah,
@@ -20,15 +19,16 @@ import {
 import { teksJam } from "@/lib/jam";
 import { site } from "@/lib/site";
 
-export function generateStaticParams() {
-  return semuaUmkm().map((u) => ({ slug: u.slug }));
+export async function generateStaticParams() {
+  const daftar = await semuaUmkm();
+  return daftar.map((u) => ({ slug: u.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/umkm/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const u = umkmBySlug(slug);
+  const u = await umkmBySlug(slug);
   if (!u) return { title: "Bidang tidak ditemukan" };
 
   const judul = `${u.nama} — ${u.kategori} Sanggrahan`;
@@ -55,11 +55,13 @@ export async function generateMetadata({
 
 export default async function HalamanDetail({ params }: PageProps<"/umkm/[slug]">) {
   const { slug } = await params;
-  const u = umkmBySlug(slug);
+  const u = await umkmBySlug(slug);
   if (!u) notFound();
 
-  const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
-  const serupa = semuaUmkm()
+  // Kategori sudah ikut terbawa bersama bidangnya dari basis data,
+  // jadi halaman ini tidak perlu memuat seluruh daftar kategori.
+  const kat = u.kat;
+  const serupa = (await semuaUmkm())
     .filter((x) => x.kategori === u.kategori && x.slug !== u.slug)
     .slice(0, 3);
 

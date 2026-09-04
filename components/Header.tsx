@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { IkonGaris, IkonSilang } from "./Ikon";
+import { IkonGaris, IkonPanah, IkonSilang } from "./Ikon";
 import { site } from "@/lib/site";
 
 const menu = [
@@ -15,7 +15,19 @@ const menu = [
   { href: "/daftar", label: "Daftar Baru" },
 ];
 
-export default function Header() {
+export default function Header({
+  nama,
+  logo,
+  kelurahan,
+  kemantren,
+  tautanProfilRw,
+}: {
+  nama: string;
+  logo: string;
+  kelurahan: string;
+  kemantren: string;
+  tautanProfilRw: string;
+}) {
   const [buka, setBuka] = useState(false);
   const path = usePathname();
 
@@ -26,9 +38,9 @@ export default function Header() {
     >
       <div className="mx-auto flex max-w-[80rem] items-center gap-4 px-4 py-4">
         <Link href="/" className="flex items-center gap-4" onClick={() => setBuka(false)}>
-          {site.logo ? (
+          {logo ? (
             <Image
-              src={site.logo}
+              src={logo}
               alt="Logo kelurahan"
               width={40}
               height={40}
@@ -48,10 +60,10 @@ export default function Header() {
           )}
           <span className="leading-tight">
             <span className="judul-registri block text-lg text-tinta sm:text-xl">
-              {site.nama}
+              {nama}
             </span>
             <span className="label-registri mt-2 block">
-              {site.kelurahan} · {site.kemantren} · RW 1 &amp; 3
+              {kelurahan} · {kemantren} · RW 1 &amp; 3
             </span>
           </span>
         </Link>
@@ -78,6 +90,20 @@ export default function Header() {
               </Link>
             );
           })}
+
+          {/*
+            Tautan keluar ke situs warga yang satunya. Dipisahkan garis dan
+            diberi panah keluar supaya jelas ini meninggalkan registri, bukan
+            berpindah halaman di dalamnya.
+          */}
+          <a
+            href={tautanProfilRw}
+            className="ml-2 inline-flex items-center gap-2 border-l-[1.5px] border-garis py-2 pl-4 text-sm font-semibold text-tinta-lembut transition-colors hover:text-resmi"
+          >
+            {site.profilRw.ringkas}
+            <IkonPanah aria-hidden className="h-4 w-4" />
+            <span className="sr-only">(situs terpisah)</span>
+          </a>
         </nav>
 
         <button
@@ -114,6 +140,16 @@ export default function Header() {
                 </Link>
               );
             })}
+
+            <a
+              href={tautanProfilRw}
+              onClick={() => setBuka(false)}
+              className="mt-2 flex items-center gap-2 border-t-[1.5px] border-garis-tegas px-2 py-4 text-base font-semibold text-tinta-lembut"
+            >
+              {site.profilRw.nama}
+              <IkonPanah aria-hidden className="h-4 w-4" />
+              <span className="sr-only">(situs terpisah)</span>
+            </a>
           </div>
         </nav>
       )}

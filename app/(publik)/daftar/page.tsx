@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import HalamanBacaan from "@/components/HalamanBacaan";
 import { site } from "@/lib/site";
 import { tautanWa } from "@/lib/format";
-import { KATEGORI } from "@/lib/kategori";
+import { pengaturan } from "@/lib/pengaturan";
+import { semuaKategori } from "@/lib/umkm";
 
 export const metadata: Metadata = {
   title: "Daftarkan Bidang Usaha",
@@ -84,10 +85,11 @@ function Kolom({
   );
 }
 
-export default function HalamanDaftar() {
+export default async function HalamanDaftar() {
+  const [p, kategori] = await Promise.all([pengaturan(), semuaKategori()]);
   const waPengurus = tautanWa(
-    site.kontakPengurus.whatsapp,
-    `Halo, saya warga ${site.kampung} dan ingin mendaftarkan usaha saya ke registri ${site.nama}.`,
+    p.kontakWhatsapp,
+    `Halo, saya warga ${p.kampung} dan ingin mendaftarkan usaha saya ke registri ${p.nama}.`,
   );
 
   return (
@@ -136,7 +138,7 @@ export default function HalamanDaftar() {
               </div>
               <p className="ukuran-baca mt-8 text-sm text-tinta-lembut">
                 Kategori yang tersedia:{" "}
-                {KATEGORI.map((k) => `${k.nama} (${k.kode})`).join(", ")}.
+                {kategori.map((k) => `${k.nama} (${k.kode})`).join(", ")}.
               </p>
             </>
           ),
@@ -199,7 +201,7 @@ export default function HalamanDaftar() {
                 Chat pengurus sekarang
               </a>
               <p className="mt-4 text-sm text-tinta-lembut">
-                {site.kontakPengurus.nama}
+                {p.kontakNama}
               </p>
             </>
           ),

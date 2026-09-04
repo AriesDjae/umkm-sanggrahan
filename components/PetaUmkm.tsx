@@ -8,7 +8,7 @@ import KodeBidang from "./KodeBidang";
 import TandaBuka from "./TandaBuka";
 import { IkonPanah, IkonPin } from "./Ikon";
 import type { Umkm } from "@/lib/types";
-import { cariKategori, KATEGORI, KATEGORI_CADANGAN } from "@/lib/kategori";
+import { kategoriTerpakai } from "@/lib/kategori";
 import { rentangHarga } from "@/lib/format";
 import { statusBuka } from "@/lib/jam";
 import { useJamKini } from "@/lib/gunakanJam";
@@ -50,7 +50,7 @@ function aman(teks: string): string {
  * gelembungnya justru menutupi peta.
  */
 function isiGelembung(u: Titik): string {
-  const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
+  const kat = u.kat;
   return `
     <span class="gelembung-nomor">${aman(u.nomor ?? "")} · ${aman(kat.nama)}</span>
     <span class="gelembung-nama">${aman(u.nama)}</span>
@@ -64,7 +64,7 @@ function isiGelembung(u: Titik): string {
  * bidangnya. Tidak ada warna yang menanggung arti — kodenya yang menanggung.
  */
 function buatPenanda(u: Titik, terpilih: boolean): L.DivIcon {
-  const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
+  const kat = u.kat;
   const garis = terpilih ? "var(--color-resmi)" : "var(--color-tinta)";
   const latar = terpilih ? "var(--color-resmi)" : "var(--color-putih)";
   const tinta = terpilih ? "var(--color-putih)" : "var(--color-tinta)";
@@ -102,13 +102,20 @@ function buatPenanda(u: Titik, terpilih: boolean): L.DivIcon {
 export default function PetaUmkm({
   daftar,
   ringkas = false,
+  pusat = site.pusatPeta,
 }: {
   daftar: Umkm[];
   /** Peta pendek tanpa daftar samping, untuk disisipkan di beranda. */
   ringkas?: boolean;
+  /** Titik tengah kampung, diatur dari /admin/pengaturan. */
+  pusat?: { lat: number; lng: number };
 }) {
   const wadah = useRef<HTMLDivElement>(null);
   const peta = useRef<L.Map | null>(null);
+  // Titik tengah hanya menentukan tampilan awal peta. Disimpan di ref supaya
+  // pemasangan peta tidak ikut terulang kalau induknya me-render ulang dengan
+  // objek pusat yang baru tapi isinya sama.
+  const pusatAwal = useRef(pusat);
   const penanda = useRef<Map<string, L.Marker>>(new Map());
   const penandaSaya = useRef<L.Marker | null>(null);
 
@@ -131,10 +138,7 @@ export default function PetaUmkm({
     [daftar],
   );
 
-  const kategoriTersedia = useMemo(() => {
-    const dipakai = new Set(titik.map((u) => u.kategori));
-    return KATEGORI.filter((k) => dipakai.has(k.nama));
-  }, [titik]);
+  const kategoriTersedia = useMemo(() => kategoriTerpakai(titik), [titik]);
 
   const tersaring = useMemo(() => {
     return titik.filter((u) => {
@@ -158,7 +162,7 @@ export default function PetaUmkm({
     if (!wadah.current || peta.current) return;
 
     const m = L.map(wadah.current, {
-      center: [site.pusatPeta.lat, site.pusatPeta.lng],
+      center: [pusatAwal.current.lat, pusatAwal.current.lng],
       zoom: 16,
       scrollWheelZoom: false,
     });
@@ -362,7 +366,7 @@ export default function PetaUmkm({
 
           <ul className="max-h-[26rem] flex-1 overflow-y-auto lg:max-h-none [&>li:last-child]:border-b-0">
             {berurut.map((u) => {
-              const kat = cariKategori(u.kategori) ?? KATEGORI_CADANGAN;
+              const kat = u.kat;
               const aktif = u.slug === terpilih;
               return (
                 <li key={u.slug} className="border-b-[1.5px] border-garis">

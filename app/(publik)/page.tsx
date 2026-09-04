@@ -3,21 +3,25 @@ import BarisBidang from "@/components/BarisBidang";
 import PetaLazy from "@/components/PetaLazy";
 import KodeBidang from "@/components/KodeBidang";
 import { IkonPanah, IkonPin } from "@/components/Ikon";
-import { KATEGORI } from "@/lib/kategori";
-import { jumlahPerKategori, semuaUmkm } from "@/lib/umkm";
+import { jumlahPerKategori, semuaKategori, semuaUmkm } from "@/lib/umkm";
+import { pengaturan } from "@/lib/pengaturan";
 import { site } from "@/lib/site";
 import { tautanWa } from "@/lib/format";
 
-export default function Beranda() {
-  const semua = semuaUmkm();
+export default async function Beranda() {
+  const [semua, hitung, kategori, p] = await Promise.all([
+    semuaUmkm(),
+    jumlahPerKategori(),
+    semuaKategori(),
+    pengaturan(),
+  ]);
   const cuplikan = semua.slice(0, 6);
-  const hitung = jumlahPerKategori();
   const berkoordinat = semua.filter((u) => u.koordinat).length;
-  const kategoriTerisi = KATEGORI.filter((k) => hitung[k.nama]).length;
+  const kategoriTerisi = kategori.filter((k) => hitung[k.nama]).length;
   // Hanya kategori yang sudah terisi yang mendapat ruas di pita sebaran:
   // ruas berjumlah nol tidak punya lebar, dan menyisakannya hanya membuat
   // garis pemisah menumpuk. Yang kosong tetap tercatat di indeks di bawah.
-  const sebaran = KATEGORI.filter((k) => hitung[k.nama]);
+  const sebaran = kategori.filter((k) => hitung[k.nama]);
 
   return (
     <>
@@ -87,7 +91,7 @@ export default function Beranda() {
               <p className="text-sm text-tinta-lembut">
                 Lebar tiap ruas sebanding dengan jumlah bidangnya.{" "}
                 <span className="angka font-semibold text-tinta">
-                  {kategoriTerisi} dari {KATEGORI.length}
+                  {kategoriTerisi} dari {kategori.length}
                 </span>{" "}
                 kategori sudah terisi.
               </p>
@@ -133,7 +137,7 @@ export default function Beranda() {
               { label: "Bidang terdaftar", nilai: String(semua.length) },
               {
                 label: "Kategori terisi",
-                nilai: `${kategoriTerisi} dari ${KATEGORI.length}`,
+                nilai: `${kategoriTerisi} dari ${kategori.length}`,
               },
               { label: "Bertitik lokasi", nilai: `${berkoordinat} bidang` },
               { label: "Wilayah", nilai: "RW 1 & RW 3" },
@@ -236,7 +240,11 @@ export default function Beranda() {
             </div>
 
             <div className="mt-4">
-              <PetaLazy daftar={semua} ringkas />
+              <PetaLazy
+                daftar={semua}
+                ringkas
+                pusat={{ lat: p.pusatLat, lng: p.pusatLng }}
+              />
             </div>
           </div>
         </div>
@@ -293,7 +301,7 @@ export default function Beranda() {
           </p>
 
           <ul className="mt-8 border-t-[1.5px] border-garis">
-            {KATEGORI.map((k) => {
+            {kategori.map((k) => {
               const n = hitung[k.nama] ?? 0;
               return (
                 <li key={k.slug} className="border-b-[1.5px] border-garis">

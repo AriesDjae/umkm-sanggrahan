@@ -1,6 +1,11 @@
 /**
- * Pengaturan umum situs.
- * Ubah nilai di sini kalau ada perubahan nama, kontak, atau alamat web.
+ * Nilai bawaan situs.
+ *
+ * Sejak ada panel pengurus, sebagian besar nilai di sini bisa diubah dari
+ * /admin/pengaturan dan tersimpan di basis data — lihat lib/pengaturan.ts.
+ * Berkas ini tetap dipakai untuk dua hal: sebagai bawaan saat pengaturannya
+ * belum pernah disimpan, dan sebagai sumber nilai bagi komponen client, yang
+ * tidak bisa menyentuh basis data.
  */
 export const site = {
   nama: "Usaha Warga Sanggrahan",
@@ -38,5 +43,18 @@ export const site = {
   sosmed: {
     instagram: "", // contoh: "https://instagram.com/umkmsanggrahan"
     facebook: "",
+  },
+
+  /**
+   * Situs Profil RW Sanggrahan — kependudukan, kegiatan, dan laporan kas RW.
+   * Registri usaha ini berdiri sendiri, tetapi keduanya melayani warga yang
+   * sama, jadi kop dan kaki halaman saling menautkan.
+   * Alamatnya bisa diubah dari /admin/pengaturan.
+   */
+  profilRw: {
+    nama: "Profil RW Sanggrahan",
+    ringkas: "Profil RW",
+    keterangan: "Kependudukan, kegiatan, dan laporan kas RW",
+    url: "https://profil-rw-sanggrahan.vercel.app",
   },
 } as const;

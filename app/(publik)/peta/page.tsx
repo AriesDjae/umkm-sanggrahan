@@ -3,6 +3,7 @@ import Link from "next/link";
 import PetaLazy from "@/components/PetaLazy";
 import Halaman from "@/components/Halaman";
 import { semuaUmkm } from "@/lib/umkm";
+import { pengaturan } from "@/lib/pengaturan";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/peta" },
 };
 
-export default function HalamanPeta() {
-  const daftar = semuaUmkm();
+export default async function HalamanPeta() {
+  const [daftar, p] = await Promise.all([semuaUmkm(), pengaturan()]);
   const berkoordinat = daftar.filter((u) => u.koordinat).length;
   const belum = daftar.length - berkoordinat;
   const perkiraan = daftar.filter(
@@ -36,7 +37,7 @@ export default function HalamanPeta() {
       </div>
 
       <div className="mt-8">
-        <PetaLazy daftar={daftar} />
+        <PetaLazy daftar={daftar} pusat={{ lat: p.pusatLat, lng: p.pusatLng }} />
       </div>
 
       {belum > 0 && (

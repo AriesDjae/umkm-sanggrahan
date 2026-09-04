@@ -17,8 +17,8 @@ const CARA_KERJA = [
   "Jual beli, pembayaran, dan pengiriman diurus sepenuhnya antara pembeli dan pemilik usaha.",
 ];
 
-export default function HalamanTentang() {
-  const jumlah = semuaUmkm().length;
+export default async function HalamanTentang() {
+  const jumlah = (await semuaUmkm()).length;
 
   return (
     <HalamanBacaan

@@ -30,13 +30,15 @@ const PetaRingkas = dynamic(() => import("./PetaUmkm"), {
 export default function PetaLazy({
   daftar,
   ringkas = false,
+  pusat,
 }: {
   daftar: Umkm[];
   ringkas?: boolean;
+  pusat?: { lat: number; lng: number };
 }) {
   return ringkas ? (
-    <PetaRingkas daftar={daftar} ringkas />
+    <PetaRingkas daftar={daftar} ringkas pusat={pusat} />
   ) : (
-    <Peta daftar={daftar} />
+    <Peta daftar={daftar} pusat={pusat} />
   );
 }

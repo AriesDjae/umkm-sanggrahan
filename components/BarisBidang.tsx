@@ -4,7 +4,6 @@ import KodeBidang from "./KodeBidang";
 import TandaBuka from "./TandaBuka";
 import type { Umkm } from "@/lib/types";
 import { fotoUtama, rentangHarga } from "@/lib/format";
-import { cariKategori, KATEGORI_CADANGAN } from "@/lib/kategori";
 
 /**
  * Satu UMKM sebagai satu baris bidang di lembar registri.
@@ -21,7 +20,7 @@ export default function BarisBidang({
   umkm: Umkm;
   urutan?: number;
 }) {
-  const kat = cariKategori(umkm.kategori) ?? KATEGORI_CADANGAN;
+  const kat = umkm.kat;
   const foto = fotoUtama(umkm);
 
   return (

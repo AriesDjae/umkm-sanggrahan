@@ -5,7 +5,7 @@ import BarisBidang from "./BarisBidang";
 import KodeBidang from "./KodeBidang";
 import { IkonCari, IkonSilang } from "./Ikon";
 import type { Umkm } from "@/lib/types";
-import { KATEGORI } from "@/lib/kategori";
+import { kategoriTerpakai } from "@/lib/kategori";
 import { statusBuka } from "@/lib/jam";
 import { useJamKini } from "@/lib/gunakanJam";
 
@@ -26,10 +26,10 @@ export default function PencarianUmkm({ daftar }: { daftar: Umkm[] }) {
     [daftar],
   );
 
-  const kategoriTersedia = useMemo(() => {
-    const dipakai = new Set(daftar.map((u) => u.kategori));
-    return KATEGORI.filter((k) => dipakai.has(k.nama));
-  }, [daftar]);
+  // Setiap bidang membawa kategorinya sendiri, jadi daftar saringan cukup
+  // diturunkan dari data yang tampil — tanpa memuat seluruh tabel kategori
+  // ke peramban.
+  const kategoriTersedia = useMemo(() => kategoriTerpakai(daftar), [daftar]);
 
   const jumlahBuka = useMemo(() => {
     if (!acuan) return null;

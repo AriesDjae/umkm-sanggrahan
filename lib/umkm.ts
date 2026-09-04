@@ -1,121 +1,176 @@
-import fs from "node:fs";
-import path from "node:path";
-import { cariKategori } from "./kategori";
-import type { Umkm } from "./types";
+import "server-only";
 
-export type { Umkm, Produk } from "./types";
+import type { Prisma } from "@prisma/client";
 
-const DIR_DATA = path.join(process.cwd(), "data", "umkm");
-const DIR_FOTO = path.join(process.cwd(), "public", "img", "umkm");
-const EKSTENSI = [".jpg", ".jpeg", ".png", ".webp"];
+import { db } from "./db";
+import type { Kategori, Umkm } from "./types";
+
+export type { Umkm, Produk, Kategori } from "./types";
 
 /**
- * Cari foto di public/img/umkm/<slug>/ berdasarkan nama berkas (tanpa ekstensi).
- * Dipakai supaya cukup taruh foto di folder yang benar tanpa mengetik path di JSON.
+ * Pembacaan registri dari basis data.
  *
- * Pencocokan mengabaikan besar-kecil huruf: "UTAMA.JPG" dari kamera HP tetap
- * terbaca. Ini penting karena Windows tidak membedakan huruf besar-kecil
- * sedangkan server tempat web ini nanti berjalan membedakannya.
+ * Sebelumnya isi registri dibaca dari berkas JSON di data/umkm/. Sejak ada
+ * panel pengurus, sumbernya pindah ke PostgreSQL — berkas JSON yang lama
+ * hanya dipakai sekali sebagai bahan seed. Nama fungsi di berkas ini sengaja
+ * dipertahankan supaya halaman-halaman yang sudah ada tinggal menunggunya.
  */
-function cariFoto(slug: string, namaBerkas: string): string | undefined {
-  const folder = path.join(DIR_FOTO, slug);
-  if (!fs.existsSync(folder)) return undefined;
 
-  const dicari = EKSTENSI.map((e) => (namaBerkas + e).toLowerCase());
-  const ada = fs.readdirSync(folder).find((f) => dicari.includes(f.toLowerCase()));
-  return ada ? `/img/umkm/${slug}/${ada}` : undefined;
-}
+const PILIH_KATEGORI = {
+  id: true,
+  slug: true,
+  nama: true,
+  kode: true,
+  ikon: true,
+  arsir: true,
+  deskripsi: true,
+  urutan: true,
+} satisfies Prisma.KategoriSelect;
 
-/** Baca semua file JSON di data/umkm/ — tambah file baru, otomatis muncul di web. */
-function bacaSemua(): Umkm[] {
-  if (!fs.existsSync(DIR_DATA)) return [];
+const SERTAKAN = {
+  kategori: { select: PILIH_KATEGORI },
+  produk: { orderBy: [{ urutan: "asc" }, { id: "asc" }] },
+} satisfies Prisma.UmkmInclude;
 
-  const berkas = fs
-    .readdirSync(DIR_DATA)
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"));
-
-  const daftar: Umkm[] = [];
-  for (const f of berkas) {
-    // Membuang penanda BOM yang sering ikut terselip
-    // kalau berkas JSON pernah disimpan lewat Notepad.
-    const isi = fs.readFileSync(path.join(DIR_DATA, f), "utf8").replace(/^\uFEFF/, "");
-    let data: Umkm;
-    try {
-      data = JSON.parse(isi) as Umkm;
-    } catch {
-      throw new Error(
-        `File data/umkm/${f} bukan JSON yang sah. Jalankan "npm run umkm:cek" untuk melihat detail kesalahannya.`,
-      );
-    }
-
-    // Slug mengikuti nama file supaya alamat halaman selalu cocok dengan berkasnya.
-    data.slug = f.replace(/\.json$/, "");
-    data.produk = data.produk ?? [];
-    if (data.aktif === false) continue;
-
-    // Foto boleh ditulis manual di JSON, atau cukup ditaruh di folder fotonya:
-    // utama.jpg untuk foto usaha, 1.jpg / 2.jpg / … sesuai urutan produk.
-    data.foto = data.foto || cariFoto(data.slug, "utama");
-    data.produk = data.produk.map((p, i) => ({
-      ...p,
-      foto: p.foto || cariFoto(data.slug, String(i + 1)),
-    }));
-
-    daftar.push(data);
-  }
-
-  daftar.sort((a, b) => a.nama.localeCompare(b.nama, "id"));
-  return beriNomor(daftar);
-}
+/** Satu baris Umkm beserta kategori dan produknya, persis seperti yang dibaca. */
+type BarisUmkm = Prisma.UmkmGetPayload<{ include: typeof SERTAKAN }>;
 
 /**
- * Beri nomor bidang pada usaha yang belum punya, misalnya "SGR-01-003".
- * Nomor yang sudah tertulis di berkas datanya tidak pernah diubah — itulah
- * yang membuat nomor registri tetap sama meski daftarnya bertambah.
+ * Bentuk baris basis data menjadi bentuk yang dipakai tampilan.
+ *
+ * Kolom kosong di basis data ("" dan null) diubah menjadi `undefined` supaya
+ * komponen cukup memeriksa "ada atau tidak", persis seperti waktu datanya
+ * masih berupa JSON.
  */
-function beriNomor(daftar: Umkm[]): Umkm[] {
-  const terpakai = new Set(daftar.map((u) => u.nomor).filter(Boolean));
+function bentuk(baris: BarisUmkm): Umkm {
+  const jamLengkap = Boolean(baris.jamMulai && baris.jamSelesai && baris.hari.length);
 
-  for (const u of daftar) {
-    if (u.nomor) continue;
-
-    const rw = String(u.rw).padStart(2, "0");
-    let urut = 1;
-    let calon = "";
-    do {
-      calon = `SGR-${rw}-${String(urut).padStart(3, "0")}`;
-      urut++;
-    } while (terpakai.has(calon));
-
-    u.nomor = calon;
-    terpakai.add(calon);
-  }
-
-  return daftar;
+  return {
+    id: baris.id,
+    slug: baris.slug,
+    nomor: baris.nomor,
+    nama: baris.nama,
+    pemilik: baris.pemilik,
+    rw: baris.rw,
+    rt: baris.rt || undefined,
+    kategori: baris.kategori.nama,
+    kat: baris.kategori,
+    deskripsi: baris.deskripsi,
+    alamat: baris.alamat,
+    maps: baris.maps || undefined,
+    koordinat:
+      baris.lat !== null && baris.lng !== null
+        ? { lat: baris.lat, lng: baris.lng }
+        : undefined,
+    sumberTitik: (baris.sumberTitik as Umkm["sumberTitik"]) || undefined,
+    jam: jamLengkap
+      ? { buka: baris.jamMulai!, tutup: baris.jamSelesai!, hari: baris.hari }
+      : undefined,
+    jamBuka: baris.jamBuka || undefined,
+    whatsapp: baris.whatsapp,
+    marketplace: {
+      shopee: baris.shopee || undefined,
+      tokopedia: baris.tokopedia || undefined,
+      tiktok: baris.tiktok || undefined,
+      gofood: baris.gofood || undefined,
+      grabfood: baris.grabfood || undefined,
+      lainnya: baris.lainnya || undefined,
+    },
+    sosmed: {
+      instagram: baris.instagram || undefined,
+      facebook: baris.facebook || undefined,
+    },
+    foto: baris.foto || undefined,
+    produk: baris.produk.map((p) => ({
+      id: p.id,
+      nama: p.nama,
+      harga: p.harga,
+      satuan: p.satuan || undefined,
+      foto: p.foto || undefined,
+      keterangan: p.keterangan || undefined,
+      urutan: p.urutan,
+    })),
+    unggulan: baris.unggulan,
+    aktif: baris.aktif,
+  };
 }
 
-export function semuaUmkm(): Umkm[] {
-  return bacaSemua();
+/** Seluruh kategori, urut sesuai urutan tampil. */
+export async function semuaKategori(): Promise<Kategori[]> {
+  return db.kategori.findMany({
+    select: PILIH_KATEGORI,
+    orderBy: [{ urutan: "asc" }, { nama: "asc" }],
+  });
 }
 
-export function umkmUnggulan(batas = 6): Umkm[] {
-  const semua = bacaSemua();
+export async function kategoriBySlug(slug: string): Promise<Kategori | null> {
+  return db.kategori.findUnique({ where: { slug }, select: PILIH_KATEGORI });
+}
+
+/** Bidang usaha yang tampil di situs publik (yang nonaktif disembunyikan). */
+export async function semuaUmkm(): Promise<Umkm[]> {
+  const baris = await db.umkm.findMany({
+    where: { aktif: true },
+    include: SERTAKAN,
+    orderBy: { nama: "asc" },
+  });
+  return baris.map(bentuk);
+}
+
+export async function umkmUnggulan(batas = 6): Promise<Umkm[]> {
+  const semua = await semuaUmkm();
   const unggulan = semua.filter((u) => u.unggulan);
   return (unggulan.length ? unggulan : semua).slice(0, batas);
 }
 
-export function umkmBySlug(slug: string): Umkm | undefined {
-  return bacaSemua().find((u) => u.slug === slug);
+export async function umkmBySlug(slug: string): Promise<Umkm | undefined> {
+  const baris = await db.umkm.findFirst({
+    where: { slug, aktif: true },
+    include: SERTAKAN,
+  });
+  return baris ? bentuk(baris) : undefined;
 }
 
-export function umkmByKategori(slugKategori: string): Umkm[] {
-  const kat = cariKategori(slugKategori);
-  if (!kat) return [];
-  return bacaSemua().filter((u) => u.kategori === kat.nama);
+export async function umkmByKategori(slugKategori: string): Promise<Umkm[]> {
+  const baris = await db.umkm.findMany({
+    where: { aktif: true, kategori: { slug: slugKategori } },
+    include: SERTAKAN,
+    orderBy: { nama: "asc" },
+  });
+  return baris.map(bentuk);
 }
 
-export function jumlahPerKategori(): Record<string, number> {
+/** Jumlah bidang per nama kategori, untuk pita sebaran di beranda. */
+export async function jumlahPerKategori(): Promise<Record<string, number>> {
+  const kelompok = await db.umkm.groupBy({
+    by: ["kategoriId"],
+    where: { aktif: true },
+    _count: { _all: true },
+  });
+
+  const kategori = await semuaKategori();
+  const namaDari = new Map(kategori.map((k) => [k.id, k.nama]));
+
   const hitung: Record<string, number> = {};
-  for (const u of bacaSemua()) hitung[u.kategori] = (hitung[u.kategori] ?? 0) + 1;
+  for (const k of kelompok) {
+    const nama = namaDari.get(k.kategoriId);
+    if (nama) hitung[nama] = k._count._all;
+  }
   return hitung;
+}
+
+/* ── Dipakai panel pengurus ─────────────────────────────────────────────── */
+
+/** Termasuk bidang yang dinonaktifkan — hanya untuk panel pengurus. */
+export async function semuaUmkmAdmin(): Promise<Umkm[]> {
+  const baris = await db.umkm.findMany({
+    include: SERTAKAN,
+    orderBy: [{ aktif: "desc" }, { nomor: "asc" }],
+  });
+  return baris.map(bentuk);
+}
+
+export async function umkmById(id: number): Promise<Umkm | null> {
+  const baris = await db.umkm.findUnique({ where: { id }, include: SERTAKAN });
+  return baris ? bentuk(baris) : null;
 }

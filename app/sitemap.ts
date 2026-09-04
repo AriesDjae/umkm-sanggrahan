@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { KATEGORI } from "@/lib/kategori";
-import { semuaUmkm } from "@/lib/umkm";
+import { semuaKategori, semuaUmkm } from "@/lib/umkm";
 import { site } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sekarang = new Date();
+  const [kategori, umkm] = await Promise.all([semuaKategori(), semuaUmkm()]);
 
   const halamanTetap: MetadataRoute.Sitemap = [
     { url: site.url, lastModified: sekarang, changeFrequency: "weekly", priority: 1 },
@@ -14,14 +14,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/tentang`, lastModified: sekarang, changeFrequency: "monthly", priority: 0.4 },
   ];
 
-  const halamanKategori: MetadataRoute.Sitemap = KATEGORI.map((k) => ({
+  const halamanKategori: MetadataRoute.Sitemap = kategori.map((k) => ({
     url: `${site.url}/kategori/${k.slug}`,
     lastModified: sekarang,
     changeFrequency: "weekly",
     priority: 0.7,
   }));
 
-  const halamanUmkm: MetadataRoute.Sitemap = semuaUmkm().map((u) => ({
+  const halamanUmkm: MetadataRoute.Sitemap = umkm.map((u) => ({
     url: `${site.url}/umkm/${u.slug}`,
     lastModified: sekarang,
     changeFrequency: "monthly",

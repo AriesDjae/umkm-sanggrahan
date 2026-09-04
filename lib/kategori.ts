@@ -1,35 +1,45 @@
-import daftar from "@/data/kategori.json";
+import type { Kategori } from "./types";
+
+export type { Kategori } from "./types";
 
 /**
- * Daftar kategori usaha ada di data/kategori.json.
+ * Kategori kini tersimpan di basis data dan dikelola dari /admin/kategori.
+ * Berkas ini tinggal berisi hal-hal yang tidak boleh ikut berubah:
+ * pencarian tanpa basis data dan kategori cadangan.
  *
- * Di registri ini kategori TIDAK dibedakan oleh warna, melainkan oleh
- * kode huruf dan arsirannya. Itu yang membuat lembarnya tetap tenang
- * dan tetap terbaca oleh pengunjung yang sulit membedakan warna.
+ * Komponen client tidak lagi memuat seluruh daftar kategori. Setiap bidang
+ * usaha sudah membawa kategorinya sendiri pada `umkm.kat`, jadi daftar yang
+ * dibutuhkan sebuah tampilan selalu bisa diturunkan dari data yang tampil.
  */
-export type Kategori = {
-  slug: string;
-  nama: string;
-  /** Satu huruf kode bidang, dicetak di kolom kode. */
-  kode: string;
-  /** Nama ikon di components/Ikon.tsx */
-  ikon: string;
-  /** Nama kelas arsiran di app/globals.css */
-  arsir: string;
-  deskripsi: string;
-};
 
-export const KATEGORI: Kategori[] = daftar;
-
-export const NAMA_KATEGORI = KATEGORI.map((k) => k.nama);
-
-export function cariKategori(slugAtauNama: string): Kategori | undefined {
+/** Cari kategori di dalam sebuah daftar, berdasarkan slug, nama, atau kode. */
+export function cariKategoriDi(
+  daftar: Kategori[],
+  slugAtauNama: string,
+): Kategori | undefined {
   const q = slugAtauNama.toLowerCase();
-  return KATEGORI.find(
+  return daftar.find(
     (k) => k.slug === q || k.nama.toLowerCase() === q || k.kode.toLowerCase() === q,
   );
 }
 
+/** Kumpulkan kategori yang benar-benar terpakai oleh sederet bidang usaha. */
+export function kategoriTerpakai(daftar: { kat: Kategori }[]): Kategori[] {
+  const peta = new Map<number, Kategori>();
+  for (const u of daftar) peta.set(u.kat.id, u.kat);
+  return [...peta.values()].sort(
+    (a, b) => a.urutan - b.urutan || a.nama.localeCompare(b.nama, "id"),
+  );
+}
+
 /** Kategori cadangan supaya tampilan tidak pernah kehilangan kode dan arsirannya. */
-export const KATEGORI_CADANGAN: Kategori =
-  KATEGORI.find((k) => k.slug === "lainnya") ?? KATEGORI[0];
+export const KATEGORI_CADANGAN: Kategori = {
+  id: 0,
+  slug: "lainnya",
+  nama: "Lainnya",
+  kode: "L",
+  ikon: "toko",
+  arsir: "arsir-penuh",
+  deskripsi: "Usaha warga yang belum masuk kategori mana pun.",
+  urutan: 99,
+};

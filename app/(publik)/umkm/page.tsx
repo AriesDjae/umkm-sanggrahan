@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/umkm" },
 };
 
-export default function HalamanUmkm() {
-  const daftar = semuaUmkm();
+export default async function HalamanUmkm() {
+  const daftar = await semuaUmkm();
 
   return (
     <Halaman>

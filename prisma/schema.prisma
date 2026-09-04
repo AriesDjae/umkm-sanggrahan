@@ -1,0 +1,154 @@
+// Skema basis data Registri Usaha Warga Sanggrahan.
+//
+// Sebelum ini seluruh data tersimpan sebagai berkas JSON di data/umkm/. Cara
+// itu bagus untuk berdua-tiga orang yang paham Git, tetapi tidak bisa dipakai
+// pengurus RW dari peramban: sistem berkas di Vercel bersifat hanya-baca.
+// Karena itu isi registri pindah ke PostgreSQL (Neon), dan berkas JSON yang
+// lama menjadi bahan seed sekali jalan di prisma/seed.ts.
+//
+// Kolom peran memakai String, bukan enum, agar nilainya terkunci di satu
+// tempat (lib/konstanta.ts) dan penambahan peran baru tidak perlu migrasi tipe.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Akun pengelola registri: ADMIN atau PENGURUS.
+model User {
+  id           Int      @id @default(autoincrement())
+  nama         String
+  email        String   @unique
+  passwordHash String
+  peran        String   @default("PENGURUS")
+  telepon      String?
+  aktif        Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([peran])
+}
+
+/// Kategori bidang usaha.
+///
+/// `kode` dan `arsir` adalah penanda kategori di registri ini — satu huruf di
+/// dalam kotak dan petak arsirannya. Warna tidak pernah menanggung arti
+/// kategori, supaya lembarnya tetap terbaca oleh pengunjung yang sulit
+/// membedakan warna. `ikon` dan `arsir` hanya boleh diisi dari daftar yang ada
+/// di lib/konstanta.ts, karena keduanya menunjuk komponen dan kelas CSS nyata.
+model Kategori {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  nama      String   @unique
+  kode      String
+  ikon      String   @default("toko")
+  arsir     String   @default("arsir-penuh")
+  deskripsi String   @default("")
+  urutan    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  umkm Umkm[]
+
+  @@index([urutan])
+}
+
+/// Satu bidang usaha yang terdaftar di registri.
+model Umkm {
+  id      Int    @id @default(autoincrement())
+  /// Bagian alamat halaman: /umkm/<slug>.
+  slug    String @unique
+  /// Nomor bidang di registri, misalnya "SGR-01-003". Sekali terbit tidak diubah.
+  nomor   String @unique
+  nama    String
+  pemilik String @default("")
+
+  rw         Int
+  rt         String @default("")
+  kategoriId Int
+  deskripsi  String @default("")
+  alamat     String @default("")
+  maps       String @default("")
+
+  lat         Float?
+  lng         Float?
+  /// Asal titik lokasi: "gps", "osm", atau "perkiraan-banner". Titik dari banner
+  /// kampung meleset puluhan meter, jadi situs harus mengatakannya, bukan
+  /// memajangnya seolah hasil ukur.
+  sumberTitik String?
+
+  /// Jam buka terstruktur, supaya situs bisa menjawab "buka nggak sekarang".
+  /// hari: 0 = Minggu … 6 = Sabtu. Kosong berarti jam belum didata.
+  jamMulai   String?
+  jamSelesai String?
+  hari       Int[]   @default([])
+  /// Keterangan jam bebas, dipakai kalau jam terstruktur belum diisi.
+  jamBuka    String  @default("")
+
+  whatsapp String @default("")
+
+  shopee    String @default("")
+  tokopedia String @default("")
+  tiktok    String @default("")
+  gofood    String @default("")
+  grabfood  String @default("")
+  lainnya   String @default("")
+  instagram String @default("")
+  facebook  String @default("")
+
+  foto     String  @default("")
+  unggulan Boolean @default(false)
+  aktif    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  kategori Kategori     @relation(fields: [kategoriId], references: [id], onDelete: Restrict)
+  produk   ProdukUmkm[]
+
+  @@index([aktif, nama])
+  @@index([kategoriId])
+  @@index([rw])
+}
+
+/// Barang atau jasa yang dijual satu bidang usaha.
+model ProdukUmkm {
+  id         Int    @id @default(autoincrement())
+  umkmId     Int
+  nama       String
+  /// Rupiah bulat. null = harganya belum didata, bukan gratis.
+  harga      Int?
+  satuan     String @default("")
+  foto       String @default("")
+  keterangan String @default("")
+  urutan     Int    @default(0)
+
+  umkm Umkm @relation(fields: [umkmId], references: [id], onDelete: Cascade)
+
+  @@index([umkmId, urutan])
+}
+
+/// Pengaturan situs (baris tunggal, id = 1).
+model Pengaturan {
+  id             Int      @id @default(1)
+  nama           String   @default("Usaha Warga Sanggrahan")
+  deskripsi      String   @default("")
+  kampung        String   @default("Kampung Sanggrahan")
+  kelurahan      String   @default("Semaki")
+  kemantren      String   @default("Umbulharjo")
+  kota           String   @default("Kota Yogyakarta")
+  logo           String   @default("")
+  kontakNama     String   @default("")
+  kontakWhatsapp String   @default("")
+  instagram      String   @default("")
+  facebook       String   @default("")
+  pusatLat       Float    @default(-7.7935)
+  pusatLng       Float    @default(110.3858)
+  /// Alamat situs Profil RW Sanggrahan, ditautkan dari kop dan kaki halaman.
+  tautanProfilRw String   @default("https://profil-rw-sanggrahan.vercel.app")
+  updatedAt      DateTime @updatedAt
+}

@@ -5,7 +5,50 @@ memprogram — cukup ikuti langkah di bawah.
 
 ---
 
-## Cara tercepat: pakai wizard
+## Cara biasa: lewat panel pengurus
+
+Ini cara yang dipakai sehari-hari. Tidak perlu terminal, tidak perlu komputer
+khusus — bisa dari HP.
+
+1. Buka **`/masuk`** di situsnya, masukkan email dan sandi pengurus Anda.
+2. Di menu kiri pilih **Bidang usaha**, lalu tombol **Catat bidang baru**.
+3. Isi minimal tiga hal: **nama usaha**, **RW**, dan **kategori**. Sisanya boleh
+   menyusul — situs sudah tahu cara menampilkan bidang yang datanya belum
+   lengkap, tanpa terlihat rusak.
+4. Tekan **Catat bidang**. Nomor bidang (misalnya `SGR-01-027`) dibuatkan
+   otomatis, dan Anda langsung dibawa ke halaman suntingnya.
+5. Di halaman sunting itu, isi daftar produk satu per satu di bagian
+   **Daftar produk**, beserta foto masing-masing.
+
+Foto diunggah langsung dari formulirnya — tidak perlu menaruh berkas ke folder
+mana pun.
+
+### Yang perlu diperhatikan
+
+- **Nomor WhatsApp** boleh ditulis bebas (`0812…`, `+62 812…`, `62812…`), nanti
+  dirapikan sendiri. Kalau kosong, lembar usaha itu tampil **tanpa tombol
+  pesan** — pengunjung sampai ke sana lalu buntu.
+- **Jam buka** hanya ikut saringan “buka sekarang” kalau hari, jam mulai, dan
+  jam tutup terisi lengkap. Kalau jamnya memang tidak menentu, kosongkan
+  ketiganya dan tulis di kolom **keterangan jam bebas**.
+- **Titik lokasi**: jangan tandai sebagai GPS kalau titiknya cuma perkiraan dari
+  banner peta kampung — pilih **perkiraan dari banner**. Titik banner meleset
+  puluhan meter, dan situs mengatakannya apa adanya kepada pengunjung.
+- Mau menurunkan sebuah usaha dari situs? Jangan dihapus. Matikan saja
+  **“Tampilkan di situs publik”** — datanya tetap tersimpan dan bisa dipasang
+  lagi kapan saja. Menghapus berarti nomornya hangus selamanya.
+
+Dasbor panel menampilkan daftar apa saja yang masih kurang dari seluruh
+registri — nomor WhatsApp, jam buka, produk, titik peta, foto — jadi Anda tidak
+perlu memeriksanya satu per satu.
+
+---
+
+## Cara borongan: pakai wizard di terminal
+
+Berguna kalau ada belasan usaha yang datanya sudah terkumpul di luar. Wizard
+menulis berkas JSON, lalu `npm run db:seed` memasukkannya ke basis data
+sekaligus. Menjalankan seed berulang akan **memperbarui**, bukan menggandakan.
 
 Buka terminal di folder proyek, lalu ketik:
 
@@ -21,7 +64,8 @@ Setelah selesai, program otomatis membuat:
 - berkas data di `data/umkm/nama-usaha.json`
 - folder foto di `public/img/umkm/nama-usaha/`
 
-Yang tersisa: **masukkan fotonya** (lihat bagian berikutnya).
+Yang tersisa: **masukkan fotonya** (lihat bagian berikutnya), lalu jalankan
+`npm run db:seed` supaya datanya masuk ke basis data dan tampil di situs.
 
 > Kolom bertanda `*` wajib diisi. Yang lain boleh dilewati dengan menekan Enter,
 > dan bisa dilengkapi belakangan.

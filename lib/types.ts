@@ -1,9 +1,12 @@
 export type Produk = {
+  id: number;
   nama: string;
   harga: number | null;
   satuan?: string;
   foto?: string;
   keterangan?: string;
+  /** Angka kecil tampil lebih dulu. */
+  urutan: number;
 };
 
 /**
@@ -22,15 +25,40 @@ export type Koordinat = {
   lng: number;
 };
 
-export type Umkm = {
+/**
+ * Kategori bidang usaha.
+ *
+ * Di registri ini kategori TIDAK dibedakan oleh warna, melainkan oleh kode
+ * huruf dan arsirannya. `ikon` menunjuk komponen di components/Ikon.tsx dan
+ * `arsir` menunjuk kelas di app/globals.css, jadi keduanya hanya boleh diisi
+ * dari daftar di lib/konstanta.ts.
+ */
+export type Kategori = {
+  id: number;
   slug: string;
-  /** Nomor bidang di registri, misalnya "SGR-01-003". Diisi otomatis kalau kosong. */
-  nomor?: string;
+  nama: string;
+  /** Satu huruf kode bidang, dicetak di kolom kode. */
+  kode: string;
+  ikon: string;
+  arsir: string;
+  deskripsi: string;
+  urutan: number;
+};
+
+export type Umkm = {
+  id: number;
+  slug: string;
+  /** Nomor bidang di registri, misalnya "SGR-01-003". */
+  nomor: string;
   nama: string;
   pemilik: string;
   rw: number;
   rt?: string;
+  /** Nama kategori — dipakai untuk menyaring dan mencari. */
   kategori: string;
+  /** Kategori lengkap, sudah diselesaikan di server supaya komponen client
+   * tidak perlu memuat seluruh daftar kategori sendiri. */
+  kat: Kategori;
   deskripsi: string;
   alamat: string;
   maps?: string;

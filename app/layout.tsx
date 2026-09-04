@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { site } from "@/lib/site";
 
 /**
@@ -82,17 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="id" className={`${barlow.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <div hidden dangerouslySetInnerHTML={{ __html: `<!--${KONTRAK}-->` }} />
-        <a
-          href="#isi"
-          className="sr-only font-semibold focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-[2px] focus:bg-[var(--color-resmi)] focus:px-4 focus:py-4 focus:text-[var(--color-putih)]"
-        >
-          Lompat ke isi
-        </a>
-        <Header />
-        <main id="isi" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
