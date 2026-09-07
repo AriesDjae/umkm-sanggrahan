@@ -216,7 +216,7 @@ export default function FormUmkm({
           label="Foto usaha"
           nama="berkasFoto"
           pratinjau={awal?.foto}
-          keterangan="JPG, PNG, WEBP, atau AVIF, maksimal 4 MB. Dikosongkan berarti foto yang sekarang tetap dipakai."
+          keterangan="JPG, PNG, WEBP, atau AVIF, maksimal 12 MB. Foto besar dikecilkan otomatis. Dikosongkan berarti foto yang sekarang tetap dipakai."
         />
 
         <Centang
